@@ -59,6 +59,10 @@ interface YandexRequests{
 
     @POST("issues/")
     fun createCard(@Body params:requestCreateCardYandexBody) :Observable<Response<yandexCard>>
+
+    @POST("/v2/issues/{issueId}/transitions/{transitionId}/_execute")
+    fun moveCard(@Path("issueId") issueId:String , @Path("transitionId") transitionId:String) :Observable<Response<List<transition>>>
+
 }
 
 class RetrofitFabric{

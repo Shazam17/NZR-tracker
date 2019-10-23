@@ -17,19 +17,29 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
     var vendor : Boolean? = null
     var presenter = CardDetailPresenter(this)
 
+    override fun getVendor(): Boolean {
+        return vendor!!
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail)
         id = intent.extras!!.getString("id")
         vendor = intent.extras!!.getBoolean("vendor")
 
-        Log.d("detail",vendor.toString())
         if(!vendor!!){
             presenter.fetchCardByIdYandex(id!!)
         }else{
             presenter.fetchCardByIdTrello(id!!)
         }
 
+        moveToClosed.setOnClickListener {
+            presenter.moveToClosed(id!!,"closed")
+        }
+
+        moveTo.setOnClickListener {
+
+        }
     }
 
 

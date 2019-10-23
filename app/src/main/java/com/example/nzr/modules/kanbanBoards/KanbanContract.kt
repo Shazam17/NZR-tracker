@@ -11,6 +11,7 @@ interface KanbanContract{
         fun fetchListsRepTrello()
         fun fetchListsRepYandex()
         fun fetch()
+        fun updateList()
     }
 
     interface KanbanView : IView{

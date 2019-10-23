@@ -50,6 +50,10 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
         }
     }
 
+    override fun updateList() {
+        view.initPagerAdapter(lists)
+    }
+
     override fun fetchListsRepTrello(){
         subscriptions += TrelloRepository()
             .fetchCardsById(view.getTrelloBoardId()!!)

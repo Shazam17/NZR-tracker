@@ -25,6 +25,18 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
                 })
     }
 
+    override fun moveToClosed(id: String, type: String) {
+        if(view.getVendor()){
+            //trello
+
+
+        }else{
+            //yandex
+            YandexRepository()
+                .moveCard(id,"closed")
+        }
+    }
+
     override fun fetchCardByIdYandex(id: String) {
         subscriptions += YandexRepository()
             .fetchCardById(id)

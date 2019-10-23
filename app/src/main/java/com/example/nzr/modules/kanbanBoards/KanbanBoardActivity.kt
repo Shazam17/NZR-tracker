@@ -44,6 +44,11 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.updateList()
+    }
+
     override fun initPagerAdapter(lists: List<listsCards>){
         adapter = KanbanPagerAdapter(lists,this)
         pager.adapter = adapter
