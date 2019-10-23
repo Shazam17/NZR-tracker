@@ -17,7 +17,8 @@ data class board(
 
 data class cardShort(
     var id:String,
-    var name:String
+    var name:String,
+    var vendor:Boolean = true
 )
 
 

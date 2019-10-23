@@ -20,12 +20,14 @@ class CardListAdapter(list:List<cardShort>,val context :Context) :RecyclerView.A
 
     class CardHolder(val view: View,val context: Context) : RecyclerView.ViewHolder(view){
         var text : TextView = view.textCardKanban
+        var vendor : Boolean? = null
         var id :String = ""
         init{
             view.setOnClickListener{
                 var intent = Intent(context,CardDetailActivity::class.java)
-                Log.d("detail",id)
+                Log.d("detail",vendor.toString())
                 intent.putExtra("id",id)
+                intent.putExtra("vendor",vendor)
                 context.startActivity(intent)
             }
         }
@@ -37,7 +39,8 @@ class CardListAdapter(list:List<cardShort>,val context :Context) :RecyclerView.A
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
         holder.text.text = cardList.get(position).name
-        //holder.id = cardList.get(position).id
+        holder.id = cardList.get(position).id
+        holder.vendor = cardList.get(position).vendor
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {

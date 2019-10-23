@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_card_detail.*
 
-class CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView{
+class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView{
 
     var id : String? = ""
     var vendor : Boolean? = null
@@ -23,6 +23,7 @@ class CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView
         id = intent.extras!!.getString("id")
         vendor = intent.extras!!.getBoolean("vendor")
 
+        Log.d("detail",vendor.toString())
         if(!vendor!!){
             presenter.fetchCardByIdYandex(id!!)
         }else{
