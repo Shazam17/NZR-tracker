@@ -38,7 +38,7 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         }
 
         moveTo.setOnClickListener {
-
+            presenter.moveToClosed(id!!,)
         }
     }
 

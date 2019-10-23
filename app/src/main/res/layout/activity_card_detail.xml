@@ -49,6 +49,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Button" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="needInfo" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="inProgress" />
+            </RadioGroup>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
