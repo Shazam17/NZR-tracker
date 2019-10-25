@@ -20,6 +20,7 @@ class DepartmentAdapter(var departs :MutableList<genericBoardShort>,val context:
     class DepartHolder(var view : View,val context: Context) : RecyclerView.ViewHolder(view){
         val name = view.textCardKanban
         var card = view.card
+        var vendors = view.vendorText
         var trelloId :String? = null
         var yandexId :String? = null
         init{
@@ -48,6 +49,16 @@ class DepartmentAdapter(var departs :MutableList<genericBoardShort>,val context:
         holder.name.text = departs.get(position).name
         holder.trelloId = departs.get(position).trelloId
         holder.yandexId = departs.get(position).yandexId
+        if(holder.trelloId != null){
+            holder.vendors.text = "trello"
+        }
+        if(holder.yandexId != null){
+            holder.vendors.text = "yandex"
+        }
+        if(holder.trelloId != null && holder.yandexId != null ){
+            holder.vendors.text = "yandex/trello"
+
+        }
 
     }
 }

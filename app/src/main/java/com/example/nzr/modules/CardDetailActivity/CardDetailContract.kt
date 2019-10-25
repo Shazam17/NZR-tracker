@@ -5,9 +5,11 @@ import com.example.nzr.common.mvp.IView
 interface CardDetailContract {
 
     interface CardDetailPresenter{
+
         fun fetchCardByIdTrello(id:String)
         fun fetchCardByIdYandex(id:String)
         fun moveToClosed(id:String,type:String)
+        fun move()
     }
 
     interface CardDetailView : IView{

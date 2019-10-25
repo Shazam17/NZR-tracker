@@ -43,8 +43,14 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
                 presenter.fetchListsRepYandex()
             }
         }
+        swipeToRefreshKanban.setOnRefreshListener {
+            presenter.updateList()
+        }
     }
 
+    override fun setRefresh(refresh:Boolean){
+        swipeToRefreshKanban.setRefreshing(refresh)
+    }
     override fun onResume() {
         super.onResume()
         Log.d("kanban","resuming")
@@ -77,10 +83,15 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.getItemId()) {
             com.example.nzr.R.id.add  ->{
-                var intent = Intent(this,AddCardActivity::class.java)
-                intent.putExtra("trelloId",trelloId)
-                intent.putExtra("yandexId",yandexId)
-                startActivity(intent)
+                if(presenter.lists.isNotEmpty()){
+                    //TODO добавить логику добавления списка
+                    var intent = Intent(this,AddCardActivity::class.java)
+                    intent.putExtra("trelloListId",presenter.getTrelloListId(adapter.current))
+                    intent.putExtra("yandexId",yandexId)
+                    startActivity(intent)
+                }else{
+
+                }
                 return true
             }
             else ->

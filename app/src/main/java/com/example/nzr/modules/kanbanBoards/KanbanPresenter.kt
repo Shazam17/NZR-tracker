@@ -12,6 +12,15 @@ import io.reactivex.rxkotlin.plusAssign
 class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.KanbanPresenter, RXPresenter(){
 
     var lists : MutableList<listsCards> = ArrayList()
+
+    override fun getTrelloListId(position:Int): String {
+        if(lists.size != 0){
+            return lists[position].id
+        }else{
+            return ""
+        }
+    }
+
     override fun fetch() {
         if(view.getTrelloBoardId() != null && view.getYandexBoardId() != null ){
             subscriptions += TrelloRepository()
@@ -41,6 +50,7 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
                         it.body()!!.forEach { task -> if(task.status.key.equals("resolved")) lsClosed.add(cardShort(task.id,task.summary,false))}
                         lists[3].cards.addAll(lsClosed)
                         view.initPagerAdapter(lists)
+                        view.setRefresh(false)
                     }
                     Observable.just(null)
                 }.subscribe({
@@ -72,7 +82,7 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
                 lists.addAll(it.body()!!)
                 it.body()!!.forEach { list-> list.cards.forEach{card-> card.vendor = true} }
                 view.initPagerAdapter(lists)
-
+                view.setRefresh(false)
             },{
                 Log.d("fetchRep","errorr")
             })
@@ -91,7 +101,8 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
                     var list :listsCards = listsCards("id","name", ls)
                     lists.add(list)
                     view.initPagerAdapter(lists)
-                },{
+                view.setRefresh(false)
+            },{
 
                 })
     }

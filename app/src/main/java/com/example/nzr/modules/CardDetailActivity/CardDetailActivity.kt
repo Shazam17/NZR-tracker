@@ -13,6 +13,7 @@ import com.example.nzr.data.rest.models.transition
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_card_detail.*
 
@@ -57,19 +58,42 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
                 },{
 
                 })
+        }else{
+            var trello = TrelloRepository()
+            var res = trello
+                .fetchBoardIdOfCard(id!!)
+                .concatMap {
+                    var boardId = it.body()!!.id
+                    trello.fetchCardsById(boardId)
+                }.subscribe({
+                    it.body()!!.forEachIndexed {index ,list ->
+                        var button = RadioButton(this)
+                        button.id = index
+                        button.text = list.name
+                        rbList.add(list.id)
+                        buttonGroup.addView(button)
+                    }
+                },{
+
+                })
         }
 
 
 
         moveTo.setOnClickListener {
             if(vendor!!){
-
+                var idIn = buttonGroup.checkedRadioButtonId
+                presenter.moveToClosed(id!!,rbList.get(idIn))
             }else{
                 var idIn = buttonGroup.checkedRadioButtonId
                 presenter.moveToClosed(id!!,rbList.get(idIn))
             }
         }
 
+
+        moveToTable.setOnClickListener {
+            presenter.move()
+        }
 
     }
 

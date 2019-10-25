@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.Gson
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
+import okhttp3.ResponseBody
 import retrofit2.http.*
 import java.io.IOException
 
@@ -31,11 +32,14 @@ interface TrelloRequests{
     @GET("members/5992868b5f6b925617fc350c/boards")
     fun getAllBoards(@QueryMap params:Map<String,String>):Observable<Response<List<board>>>
 
-    @POST("cards/")
-    fun createCard(@QueryMap params:Map<String,String>)
+    @GET("cards/{cardId}/board")
+    fun getBoardIdOfCard(@Path("cardId")cardId:String) : Observable<Response<board>>
 
-    @PUT("cards/")
-    fun updateCard(@QueryMap params:Map<String,String>)
+    @POST("cards/")
+    fun createCard(@QueryMap params:Map<String,String>): Observable<Response<cardDetail>>
+
+    @PUT("cards/{cardId}")
+    fun updateCard(@Path("cardId")cardId:String,@QueryMap params:Map<String,String>): Observable<Response<cardDetail>>
 
     @DELETE("cards/")
     fun deleteCard(@Query("id") id:String)

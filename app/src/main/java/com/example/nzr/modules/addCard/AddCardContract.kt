@@ -1,5 +1,7 @@
 package com.example.nzr.modules.addCard
 
+import com.example.nzr.common.mvp.IView
+
 interface CreateCardContract{
 
 
@@ -7,7 +9,7 @@ interface CreateCardContract{
         fun createCard(name:String,id: String, vendor: Boolean)
     }
 
-    interface AddCardView{
+    interface AddCardView : IView{
         fun getCardId():String
         fun back()
     }

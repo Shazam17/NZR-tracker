@@ -12,6 +12,7 @@ interface KanbanContract{
         fun fetchListsRepYandex()
         fun fetch()
         fun updateList()
+        fun getTrelloListId(position:Int):String
     }
 
     interface KanbanView : IView{
@@ -19,6 +20,7 @@ interface KanbanContract{
         fun initPagerAdapter(lists: List<listsCards>)
         fun getTrelloBoardId():String?
         fun getYandexBoardId():String?
+        fun setRefresh(refresh:Boolean)
     }
 
     interface KanbanModel{

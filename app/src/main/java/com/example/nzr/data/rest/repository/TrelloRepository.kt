@@ -43,4 +43,27 @@ class TrelloRepository {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun updateCard(idCard:String ,idList:String):Observable<Response<cardDetail>>{
+        var map = mapOf("idList" to idList)
+        return trelloFabric
+            .updateCard(idCard , map)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun fetchBoardIdOfCard(id:String) : Observable<Response<board>>{
+        return trelloFabric
+            .getBoardIdOfCard(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun createCard(idList: String,name:String):Observable<Response<cardDetail>>{
+        var map = mapOf("idList" to idList, "name" to name)
+        return trelloFabric
+            .createCard(map)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

@@ -44,6 +44,12 @@
                 android:layout_height="wrap_content"
                 android:text="move" />
 
+            <Button
+                android:id="@+id/moveToTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="moveToTable" />
+
             <RadioGroup
                 android:id="@+id/buttonGroup"
                 android:layout_width="match_parent"

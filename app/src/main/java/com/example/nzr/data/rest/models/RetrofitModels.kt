@@ -61,11 +61,6 @@ data class yandexQueue(
     var display : String
 )
 
-data class genericBoardShort(
-    var trelloId : String?,
-    var yandexId : String?,
-    var name : String
-)
 
 data class yandexCard(
     var self : String,
@@ -109,6 +104,13 @@ data class transition(
     var to:status,
     var screen:transitionScreen
 )
+
+data class genericBoardShort(
+    var trelloId : String?,
+    var yandexId : String?,
+    var name : String
+)
+
 
 fun yandexToGeneric(board:yandexBoard) : genericBoardShort{
     return genericBoardShort(null,board.id , board.name)

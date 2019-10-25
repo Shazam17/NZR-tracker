@@ -6,6 +6,7 @@ import com.example.nzr.data.rest.models.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 class YandexRepository {

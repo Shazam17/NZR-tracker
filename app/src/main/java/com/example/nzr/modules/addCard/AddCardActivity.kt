@@ -1,5 +1,6 @@
 package com.example.nzr.modules.addCard
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
@@ -7,30 +8,33 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.nzr.R
 import kotlinx.android.synthetic.main.activity_create_card.*
 
-class AddCardActivity  :AppCompatActivity(), CreateCardContract.AddCardView{
+class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
 
-    var presenter  : CreateCardPresenter? = CreateCardPresenter(this)
-    var trelloId :String? = null
-    var yandexId :String? = null
+    var presenter: CreateCardPresenter? = CreateCardPresenter(this)
+    var trelloId: String? = null
+    var yandexId: String? = null
 
+    override fun getActivity(): Activity {
+        return this
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_card)
-        trelloId = intent.extras?.getString("trelloId")
+        trelloId = intent.extras?.getString("trelloListId")
         yandexId = intent.extras?.getString("yandexId")
 
-        buttonCreateCard.setOnClickListener{
+        buttonCreateCard.setOnClickListener {
             var vendorId = vendors.checkedRadioButtonId
-            var vendor : Boolean? = null
+            var vendor: Boolean?
 
-            if(vendorId == R.id.trelloVendor){
+            if (vendorId == R.id.trelloVendor) {
                 vendor = true
-                presenter?.createCard(cardName.text.toString(),trelloId!!,vendor)
-            }else{
+                presenter?.createCard(cardName.text.toString(), trelloId!!, vendor)
+            } else {
                 vendor = false
-                presenter?.createCard(cardName.text.toString(),yandexId!!,vendor)
+                presenter?.createCard(cardName.text.toString(), yandexId!!, vendor)
             }
 
         }

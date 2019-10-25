@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_card_detail.*
 
 class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDetailContract.CardDetailPresenter,RXPresenter(){
 
+
     var yandex = YandexRepository()
 
     override fun fetchCardByIdTrello(id:String){
@@ -31,6 +32,18 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
     override fun moveToClosed(id: String, type: String) {
         if(view.getVendor()){
             //trello
+            var trello = TrelloRepository()
+            subscriptions += trello
+                .updateCard(id,type)
+                .subscribe({
+                    Log.d("fetchCardDetail","success")
+                    Toast.makeText(view.getActivity(),"success moving",Toast.LENGTH_SHORT).show()
+                    view.back()
+                },{
+                    Log.d("fetchCardDetail",it.localizedMessage!!)
+                    Toast.makeText(view.getActivity(),"Erorr in moving Card ${it.localizedMessage!!}",Toast.LENGTH_SHORT).show()
+                })
+
 
 
         }else{
@@ -68,5 +81,9 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
                 },{
                     Log.d("fetchCardDetail",it.localizedMessage!!)
                 })
+    }
+
+    override fun move() {
+
     }
 }

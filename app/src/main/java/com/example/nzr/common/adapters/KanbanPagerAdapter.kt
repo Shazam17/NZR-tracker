@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.kanban_pager_item.view.*
 
 class KanbanPagerAdapter(var lists: List<listsCards>,var context: Context) : RecyclerView.Adapter<KanbanPagerAdapter.PagerHolder>(){
 
+    var current = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerHolder {
        return PagerHolder(LayoutInflater
@@ -28,8 +29,13 @@ class KanbanPagerAdapter(var lists: List<listsCards>,var context: Context) : Rec
         return lists.size
     }
 
+    fun getCurrentIndex():Int{
+        return current
+    }
+
     override fun onBindViewHolder(holder: PagerHolder, position: Int) {
         holder.setUp(lists.get(position),position)
+        current = position
     }
 
     class PagerHolder(var view: View,var context: Context) : RecyclerView.ViewHolder(view){
@@ -43,11 +49,11 @@ class KanbanPagerAdapter(var lists: List<listsCards>,var context: Context) : Rec
             list.adapter = adapter
             list.layoutManager = LinearLayoutManager(context)
             when(pos){
-                0 -> title.text = "Открыто"
-                1 -> title.text = "Требуется информация"
-                2 -> title.text = "В работе"
-                3 -> title.text = "Закрыто"
-                else -> title.text = "HZ"
+                0 -> title.text = "trello = ${listsCards.name} yandex = Открыто"
+                1 -> title.text = "trello = ${listsCards.name} yandex = Требуется информация"
+                2 -> title.text = "trello = ${listsCards.name} yandex = В работе"
+                3 -> title.text = "trello = ${listsCards.name} yandex = Закрыто"
+                else -> title.text = "${listsCards.name}"
             }
 
         }
