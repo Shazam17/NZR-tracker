@@ -2,13 +2,13 @@ package com.example.nzr.modules.cardDetailActivity
 
 import android.util.Log
 import android.widget.Toast
+import com.example.nzr.common.mvp.RXPresenter
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
-import com.example.nzr.modules.startScreen.RXPresenter
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 
-class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDetailContract.CardDetailPresenter,RXPresenter(){
+class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDetailContract.CardDetailPresenter, RXPresenter(){
 
 
     var yandex = YandexRepository()

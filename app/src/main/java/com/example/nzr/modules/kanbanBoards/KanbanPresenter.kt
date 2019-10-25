@@ -1,11 +1,11 @@
 package com.example.nzr.modules.kanbanBoards
 
 import android.util.Log
+import com.example.nzr.common.mvp.RXPresenter
 import com.example.nzr.data.rest.models.CardShort
 import com.example.nzr.data.rest.models.ListsCards
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
-import com.example.nzr.modules.startScreen.RXPresenter
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 
