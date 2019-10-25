@@ -32,8 +32,13 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
 
         }else{
             //yandex
-            YandexRepository()
-                .moveCard(id,"closed")
+            subscriptions += YandexRepository()
+                .moveCard(id,type)
+                .subscribe({
+
+                },{
+                    Log.d("detail",it.localizedMessage!!)
+                })
         }
     }
 

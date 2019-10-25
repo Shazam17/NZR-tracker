@@ -26,7 +26,7 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         setContentView(R.layout.activity_card_detail)
         id = intent.extras!!.getString("id")
         vendor = intent.extras!!.getBoolean("vendor")
-
+        Log.d("detail",id!!)
         if(!vendor!!){
             presenter.fetchCardByIdYandex(id!!)
         }else{
@@ -38,7 +38,13 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         }
 
         moveTo.setOnClickListener {
-            presenter.moveToClosed(id!!,)
+            var idIn = buttonGroup.checkedRadioButtonId
+            var type:String = ""
+            when(idIn){
+                R.id.needInfo -> type = "needInfo"
+                R.id.inProgress -> type = "inProgress"
+            }
+            presenter.moveToClosed(id!!,type)
         }
     }
 

@@ -51,17 +51,18 @@
                 android:text="Button" />
 
             <RadioGroup
+                android:id="@+id/buttonGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/needInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="needInfo" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/inProgress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="inProgress" />

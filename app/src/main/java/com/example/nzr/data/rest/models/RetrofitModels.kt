@@ -94,8 +94,16 @@ data class requestCreateCardYandexBody(
     var summary: String
 )
 
-data class transition(
+data class transitionScreen(
+    var self:String,
+    var id:String
+)
 
+data class transition(
+    var self:String,
+    var id:String,
+    var to:status,
+    var screen:transitionScreen
 )
 
 fun yandexToGeneric(board:yandexBoard) : genericBoardShort{
