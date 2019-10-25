@@ -1,8 +1,8 @@
 package com.example.nzr.modules.kanbanBoards
 
 import android.util.Log
-import com.example.nzr.data.rest.models.cardShort
-import com.example.nzr.data.rest.models.listsCards
+import com.example.nzr.data.rest.models.CardShort
+import com.example.nzr.data.rest.models.ListsCards
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import com.example.nzr.modules.startScreen.RXPresenter
@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.plusAssign
 
 class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.KanbanPresenter, RXPresenter(){
 
-    var lists : MutableList<listsCards> = ArrayList()
+    var lists : MutableList<ListsCards> = ArrayList()
 
     override fun getTrelloListId(position:Int): String {
         if(lists.size != 0){
@@ -34,20 +34,20 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
                 }.concatMap{
                     Log.d("fetchRep",it.body().toString())
                     if(it.body() != null){
-                        var  lsOpen : MutableList<cardShort> = ArrayList()
-                        it.body()!!.forEach { task -> if(task.status.key.equals("open")) lsOpen.add(cardShort(task.id,task.summary,false))}
+                        var  lsOpen : MutableList<CardShort> = ArrayList()
+                        it.body()!!.forEach { task -> if(task.Status.key.equals("open")) lsOpen.add(CardShort(task.id,task.summary,false))}
                         lists[0].cards.addAll(lsOpen)
 
-                        var lsNeedInformation : MutableList<cardShort> = ArrayList()
-                        it.body()!!.forEach { task -> if(task.status.key.equals("needInfo")) lsNeedInformation.add(cardShort(task.id,task.summary,false))}
+                        var lsNeedInformation : MutableList<CardShort> = ArrayList()
+                        it.body()!!.forEach { task -> if(task.Status.key.equals("needInfo")) lsNeedInformation.add(CardShort(task.id,task.summary,false))}
                         lists[1].cards.addAll(lsNeedInformation)
 
-                        var lsInWork : MutableList<cardShort> = ArrayList()
-                        it.body()!!.forEach { task -> if(task.status.key.equals("inProgress")) lsInWork.add(cardShort(task.id,task.summary,false))}
+                        var lsInWork : MutableList<CardShort> = ArrayList()
+                        it.body()!!.forEach { task -> if(task.Status.key.equals("inProgress")) lsInWork.add(CardShort(task.id,task.summary,false))}
                         lists[2].cards.addAll(lsInWork)
 
-                        var lsClosed : MutableList<cardShort> = ArrayList()
-                        it.body()!!.forEach { task -> if(task.status.key.equals("resolved")) lsClosed.add(cardShort(task.id,task.summary,false))}
+                        var lsClosed : MutableList<CardShort> = ArrayList()
+                        it.body()!!.forEach { task -> if(task.Status.key.equals("resolved")) lsClosed.add(CardShort(task.id,task.summary,false))}
                         lists[3].cards.addAll(lsClosed)
                         view.initPagerAdapter(lists)
                         view.setRefresh(false)
@@ -93,12 +93,12 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
         subscriptions += YandexRepository()
             .fetchCards(mapOf("queue" to view.getYandexBoardId()!!))
             .subscribe({
-                    var  ls : MutableList<cardShort> = ArrayList()
+                    var  ls : MutableList<CardShort> = ArrayList()
                     if(it.body() != null){
-                        it.body()!!.forEach { ls.add(cardShort(it.id,it.summary,false))
+                        it.body()!!.forEach { ls.add(CardShort(it.id,it.summary,false))
                         Log.d("fetchRep",it.summary)}
                     }
-                    var list :listsCards = listsCards("id","name", ls)
+                    var list = ListsCards("id","name", ls)
                     lists.add(list)
                     view.initPagerAdapter(lists)
                 view.setRefresh(false)

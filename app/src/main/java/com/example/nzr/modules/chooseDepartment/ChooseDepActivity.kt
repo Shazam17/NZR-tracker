@@ -1,18 +1,17 @@
-package com.example.nzr.modules.startScreen
+package com.example.nzr.modules.chooseDepartment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nzr.R
-import com.example.nzr.common.adapters.DepartmentAdapter
-import com.example.nzr.data.rest.models.board
-import com.example.nzr.data.rest.models.genericBoardShort
+import com.example.nzr.data.rest.models.GenericBoardShort
 import kotlinx.android.synthetic.main.activity_choose_dep.*
 
-class ChooseDepActivity : AppCompatActivity()  , DepartmentContract.DepartmentView{
+class ChooseDepActivity : AppCompatActivity()  ,
+    ChooseDepartmentContract.DepartmentView {
 
     lateinit var presenter: DepartmentPresenter
-    lateinit var adapter :DepartmentAdapter
+    lateinit var adapter : DepartmentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +26,11 @@ class ChooseDepActivity : AppCompatActivity()  , DepartmentContract.DepartmentVi
         //TODO навигация от отдела к доскам
     }
 
-    override fun initAdapter(depList:MutableList<genericBoardShort>) {
+    override fun initAdapter(depList:MutableList<GenericBoardShort>) {
 
     }
-    override fun updateAdapter(depList:MutableList<genericBoardShort>){
-        adapter =  DepartmentAdapter(depList,this)
+    override fun updateAdapter(depList:MutableList<GenericBoardShort>){
+        adapter = DepartmentAdapter(depList, this)
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
 

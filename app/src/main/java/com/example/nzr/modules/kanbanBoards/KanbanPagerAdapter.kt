@@ -1,4 +1,4 @@
-package com.example.nzr.common.adapters
+package com.example.nzr.modules.kanbanBoards
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,23 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.example.nzr.R
+import com.example.nzr.common.adapters.CardListAdapter
 
-import com.example.nzr.data.rest.models.listsCards
+import com.example.nzr.data.rest.models.ListsCards
 import kotlinx.android.synthetic.main.kanban_pager_item.view.*
 
 
 
 
-class KanbanPagerAdapter(var lists: List<listsCards>,var context: Context) : RecyclerView.Adapter<KanbanPagerAdapter.PagerHolder>(){
+class KanbanPagerAdapter(var lists: List<ListsCards>, var context: Context) : RecyclerView.Adapter<KanbanPagerAdapter.PagerHolder>(){
 
     var current = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerHolder {
-       return PagerHolder(LayoutInflater
-           .from(context)
-           .inflate(R.layout.kanban_pager_item,parent,false),context)
+       return PagerHolder(
+           LayoutInflater
+               .from(context)
+               .inflate(R.layout.kanban_pager_item, parent, false), context
+       )
     }
 
     override fun getItemCount(): Int {
@@ -42,10 +44,11 @@ class KanbanPagerAdapter(var lists: List<listsCards>,var context: Context) : Rec
 
         var list = view.list
         var title = view.title
-        lateinit var adapter :CardListAdapter
+        lateinit var adapter : CardListAdapter
 
-        fun setUp(listsCards: listsCards,pos:Int){
-            adapter = CardListAdapter(listsCards.cards,context = context)
+        fun setUp(listsCards: ListsCards, pos:Int){
+            adapter =
+                CardListAdapter(listsCards.cards, context = context)
             list.adapter = adapter
             list.layoutManager = LinearLayoutManager(context)
             when(pos){

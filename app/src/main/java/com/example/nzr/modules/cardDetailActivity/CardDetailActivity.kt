@@ -1,20 +1,14 @@
-package com.example.nzr.modules.CardDetailActivity
+package com.example.nzr.modules.cardDetailActivity
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nzr.R
 import com.example.nzr.common.mvp.IView
-import com.example.nzr.data.rest.RetrofitFabric
-import com.example.nzr.data.rest.models.transition
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_card_detail.*
 
 class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView,IView{

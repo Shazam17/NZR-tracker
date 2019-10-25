@@ -1,9 +1,7 @@
 package com.example.nzr.data.rest.models
 
-import com.google.gson.annotations.SerializedName
 
-
-data class board(
+data class Board(
      var id :String,
      var name :String,
      var desc :String,
@@ -15,14 +13,14 @@ data class board(
      var shortUrl  :  Boolean
 )
 
-data class cardShort(
+data class CardShort(
     var id:String,
     var name:String,
     var vendor:Boolean = true
 )
 
 
-data class cardDetail(
+data class CardDetail(
     var id:String,
     var name:String,
     var address:String,
@@ -33,28 +31,28 @@ data class cardDetail(
 
 )
 
-data class listsCards(
+data class ListsCards(
     var id : String,
     var name:String,
-    var cards : MutableList<cardShort>
+    var cards : MutableList<CardShort>
 )
 
-data class yandexBoard(
+data class YandexBoard(
     var self : String,
     var id : String,
     var version : String,
     var name : String,
-    var columns : List<yandexColumn>,
+    var columns : List<YandexColumn>,
     //filter
     var useRanking : Boolean
 )
-data class yandexColumn(
+data class YandexColumn(
     var self : String,
     var id : String,
     var display : String
 )
 
-data class yandexQueue(
+data class YandexQueue(
     var self : String,
     var id : String,
     var key : String,
@@ -62,66 +60,66 @@ data class yandexQueue(
 )
 
 
-data class yandexCard(
+data class YandexCard(
     var self : String,
     var id : String,
     var key : String,
     var version : Int,
     var lastCommentUpdatedAt : String,
     var summary : String,
-    var queue: yandexQueue,
-    var status :status
+    var queue: YandexQueue,
+    var Status :Status
 
 )
-data class status(
+data class Status(
     var self:String,
     var id:String,
     var key:String,
     var display: String
 )
 
-data class queueCreate(
+data class QueueCreate(
     var id: String
 )
 
-data class queueShort(
+data class QueueShort(
     var id: String,
     var name:String
 )
-data class requestCreateCardYandexBody(
-    var queue: queueCreate,
+data class RequestCreateCardYandexBody(
+    var queue: QueueCreate,
     var summary: String
 )
 
-data class transitionScreen(
+data class TransitionScreen(
     var self:String,
     var id:String
 )
 
-data class transition(
+data class Transition(
     var self:String,
     var id:String,
-    var to:status,
-    var screen:transitionScreen
+    var to:Status,
+    var screen:TransitionScreen
 )
 
-data class genericBoardShort(
+data class GenericBoardShort(
     var trelloId : String?,
     var yandexId : String?,
     var name : String
 )
 
 
-fun yandexToGeneric(board:yandexBoard) : genericBoardShort{
-    return genericBoardShort(null,board.id , board.name)
+fun yandexToGeneric(board:YandexBoard) : GenericBoardShort{
+    return GenericBoardShort(null,board.id , board.name)
 }
 
-fun yandexQueueToGeneric(queue:queueShort):genericBoardShort{
-    return genericBoardShort(null,queue.id,queue.name)
+fun yandexQueueToGeneric(queue:QueueShort):GenericBoardShort{
+    return GenericBoardShort(null,queue.id,queue.name)
 }
 
-fun trelloToGeneric(board:board) : genericBoardShort{
-    return genericBoardShort(board.id ,null, board.name)
+fun trelloToGeneric(board:Board) : GenericBoardShort{
+    return GenericBoardShort(board.id ,null, board.name)
 }
 
 

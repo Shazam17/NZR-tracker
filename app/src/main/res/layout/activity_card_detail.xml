@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".modules.CardDetailActivity.CardDetailActivity">
+    tools:context=".modules.cardDetailActivity.CardDetailActivity">
     >
 
     <androidx.cardview.widget.CardView

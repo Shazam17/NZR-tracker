@@ -1,28 +1,12 @@
 package com.example.nzr.modules.startScreen
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.acitivity_start.*
 import android.content.Intent
-import android.provider.Settings
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.GoogleAuthProvider
-import com.vk.api.sdk.VK
-import com.vk.api.sdk.auth.VKAccessToken
-import com.vk.api.sdk.auth.VKAuthCallback
-import com.vk.api.sdk.auth.VKScope
 import com.vk.api.sdk.utils.VKUtils
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.nzr.modules.chooseDepartment.ChooseDepActivity
 
 //AgAAAAAUjHxjAAXqvJEutRVo7kE9sfwnpdzFs9A yandex token
 // e963f1635b624ec7aca5efd8e6d15fdf id
@@ -42,7 +26,7 @@ class StartActivity : AppCompatActivity() ,StartContract.StartView{
     }
 
     override fun toNextScreen(){
-        var intent = Intent(this,ChooseDepActivity::class.java)
+        var intent = Intent(this, ChooseDepActivity::class.java)
         startActivity(intent)
     }
 

@@ -2,8 +2,12 @@ package com.example.nzr.common.mvp
 
 import android.app.Activity
 import android.view.View
+import io.reactivex.disposables.CompositeDisposable
 
 
+abstract class RXPresenter{
+    val subscriptions: CompositeDisposable = CompositeDisposable()
+}
 interface IView{
     fun getActivity(): Activity
 }

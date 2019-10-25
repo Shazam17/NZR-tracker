@@ -1,15 +1,12 @@
-package com.example.nzr.modules.CardDetailActivity
+package com.example.nzr.modules.cardDetailActivity
 
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import com.example.nzr.data.rest.models.transition
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import com.example.nzr.modules.startScreen.RXPresenter
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.android.synthetic.main.activity_card_detail.*
 
 class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDetailContract.CardDetailPresenter,RXPresenter(){
 

@@ -1,4 +1,4 @@
-package com.example.nzr.modules.CardDetailActivity
+package com.example.nzr.modules.cardDetailActivity
 
 import com.example.nzr.common.mvp.IView
 

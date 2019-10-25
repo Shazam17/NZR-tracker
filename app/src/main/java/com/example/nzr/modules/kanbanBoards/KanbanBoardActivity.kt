@@ -3,16 +3,13 @@ package com.example.nzr.modules.kanbanBoards
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nzr.common.adapters.KanbanPagerAdapter
-import com.example.nzr.data.rest.models.listsCards
+import com.example.nzr.data.rest.models.ListsCards
 import kotlinx.android.synthetic.main.activty_kanban.*
 import android.view.Menu
 import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nzr.modules.addCard.AddCardActivity
-import kotlinx.android.synthetic.main.activity_choose_dep.*
 
 
 class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
@@ -57,8 +54,8 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         presenter.updateList()
     }
 
-    override fun initPagerAdapter(lists: List<listsCards>){
-        adapter = KanbanPagerAdapter(lists,this)
+    override fun initPagerAdapter(lists: List<ListsCards>){
+        adapter = KanbanPagerAdapter(lists, this)
         adapter.notifyDataSetChanged()
         pager.adapter = adapter
     }

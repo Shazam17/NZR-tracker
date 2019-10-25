@@ -1,20 +1,17 @@
-package com.example.nzr.common.adapters
+package com.example.nzr.modules.chooseDepartment
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nzr.R
-import com.example.nzr.data.rest.models.board
-import com.example.nzr.data.rest.models.genericBoardShort
+import com.example.nzr.data.rest.models.GenericBoardShort
 import com.example.nzr.modules.kanbanBoards.KanbanBoardActivity
 import kotlinx.android.synthetic.main.card_kanban.view.*
 
-class DepartmentAdapter(var departs :MutableList<genericBoardShort>,val context: Context) :RecyclerView.Adapter<DepartmentAdapter.DepartHolder>(){
+class DepartmentAdapter(var departs :MutableList<GenericBoardShort>, val context: Context) :RecyclerView.Adapter<DepartmentAdapter.DepartHolder>(){
 
 
     class DepartHolder(var view : View,val context: Context) : RecyclerView.ViewHolder(view){
@@ -36,9 +33,10 @@ class DepartmentAdapter(var departs :MutableList<genericBoardShort>,val context:
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartHolder {
-        return DepartmentAdapter.DepartHolder(
+        return DepartHolder(
             LayoutInflater.from(context)
-                .inflate(R.layout.card_kanban, parent, false),context)
+                .inflate(R.layout.card_kanban, parent, false), context
+        )
     }
 
     override fun getItemCount(): Int {

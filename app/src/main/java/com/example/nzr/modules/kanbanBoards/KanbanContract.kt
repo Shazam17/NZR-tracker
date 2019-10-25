@@ -2,8 +2,7 @@ package com.example.nzr.modules.kanbanBoards
 
 import android.app.Activity
 import com.example.nzr.common.mvp.IView
-import com.example.nzr.data.rest.models.listsCards
-import com.example.nzr.modules.startScreen.StartActivity
+import com.example.nzr.data.rest.models.ListsCards
 
 interface KanbanContract{
 
@@ -17,13 +16,10 @@ interface KanbanContract{
 
     interface KanbanView : IView{
         override fun getActivity(): Activity
-        fun initPagerAdapter(lists: List<listsCards>)
+        fun initPagerAdapter(lists: List<ListsCards>)
         fun getTrelloBoardId():String?
         fun getYandexBoardId():String?
         fun setRefresh(refresh:Boolean)
     }
 
-    interface KanbanModel{
-
-    }
 }

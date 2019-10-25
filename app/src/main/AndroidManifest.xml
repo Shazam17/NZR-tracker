@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".modules.addCard.AddCardActivity"/>
-        <activity android:name=".modules.startScreen.ChooseDepActivity"/>
+        <activity android:name=".modules.chooseDepartment.ChooseDepActivity"/>
         <activity android:name=".modules.kanbanBoards.KanbanBoardActivity"/>
         <activity android:name=".modules.startScreen.StartActivity" >
             <intent-filter>
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.CardDetailActivity.CardDetailActivity" />
+        <activity android:name=".modules.cardDetailActivity.CardDetailActivity" />
 
     </application>
 
