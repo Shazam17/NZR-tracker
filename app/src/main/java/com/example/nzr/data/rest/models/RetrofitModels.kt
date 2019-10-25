@@ -85,12 +85,16 @@ data class status(
     var display: String
 )
 
+data class queueCreate(
+    var id: String
+)
+
 data class queueShort(
     var id: String,
     var name:String
 )
 data class requestCreateCardYandexBody(
-    var queue: queueShort,
+    var queue: queueCreate,
     var summary: String
 )
 

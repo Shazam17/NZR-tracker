@@ -32,6 +32,7 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         yandexId = intent.extras!!.getString("yandex")
         name = intent.extras!!.getString("name")
         title = name
+        Log.d("kanban","trello id = ${trelloId} yandexId = ${yandexId}")
         if(trelloId != null && yandexId != null){
             presenter.fetch()
         }else{
@@ -77,8 +78,8 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         when (item.getItemId()) {
             com.example.nzr.R.id.add  ->{
                 var intent = Intent(this,AddCardActivity::class.java)
-                intent.putExtra("trello",trelloId)
-                intent.putExtra("yandex",yandexId)
+                intent.putExtra("trelloId",trelloId)
+                intent.putExtra("yandexId",yandexId)
                 startActivity(intent)
                 return true
             }

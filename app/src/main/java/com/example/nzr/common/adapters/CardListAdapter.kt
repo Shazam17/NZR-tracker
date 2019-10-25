@@ -19,7 +19,8 @@ class CardListAdapter(list:List<cardShort>,val context :Context) :RecyclerView.A
     var cardList:List<cardShort> = list
 
     class CardHolder(val view: View,val context: Context) : RecyclerView.ViewHolder(view){
-        var text : TextView = view.textCardKanban
+        var textField : TextView = view.textCardKanban
+        var vendorField : TextView = view.vendorText
         var vendor : Boolean? = null
         var id :String = ""
         init{
@@ -38,9 +39,14 @@ class CardListAdapter(list:List<cardShort>,val context :Context) :RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
-        holder.text.text = cardList.get(position).name
+        holder.textField.text = cardList.get(position).name
         holder.id = cardList.get(position).id
         holder.vendor = cardList.get(position).vendor
+        if(holder.vendor!!){
+            holder.vendorField.text = "trello card"
+        }else{
+            holder.vendorField.text = "yandex card"
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {

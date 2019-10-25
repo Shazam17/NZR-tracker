@@ -59,6 +59,7 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
         }
     }
 
+
     override fun fetchCardByIdYandex(id: String) {
         subscriptions += YandexRepository()
             .fetchCardById(id)

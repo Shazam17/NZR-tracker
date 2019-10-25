@@ -39,34 +39,15 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/moveToClosed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="moveToClosed" />
-
-            <Button
                 android:id="@+id/moveTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="move" />
 
             <RadioGroup
                 android:id="@+id/buttonGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <RadioButton
-                    android:id="@+id/needInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="needInfo" />
-
-                <RadioButton
-                    android:id="@+id/inProgress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="inProgress" />
-            </RadioGroup>
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

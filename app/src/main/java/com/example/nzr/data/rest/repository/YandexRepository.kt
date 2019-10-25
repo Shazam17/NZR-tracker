@@ -54,14 +54,15 @@ class YandexRepository {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-//
-//    fun createCard(name:String ,id:String) : Observable<Response<yandexCard>>{
-//        //var map = requestCreateCardYandexBody(queueShort(id , name))
-//        return repository
-//            .createCard(map)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//    }
+
+    fun createCard(name:String ,id:String) : Observable<Response<yandexCard>>{
+
+        var map = requestCreateCardYandexBody(queueCreate(id),name)
+        return repository
+            .createCard(map)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 
 
 }

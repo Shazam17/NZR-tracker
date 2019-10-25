@@ -51,7 +51,18 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
     }
 
     override fun updateList() {
-        view.initPagerAdapter(lists)
+        lists.clear()
+        if(view.getTrelloBoardId() != null && view.getYandexBoardId() != null){
+            fetch()
+        }else{
+            if(view.getTrelloBoardId() != null){
+                fetchListsRepTrello()
+            }
+            if(view.getYandexBoardId() != null){
+                fetchListsRepYandex()
+            }
+        }
+
     }
 
     override fun fetchListsRepTrello(){
@@ -59,6 +70,7 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
             .fetchCardsById(view.getTrelloBoardId()!!)
             .subscribe({
                 lists.addAll(it.body()!!)
+                it.body()!!.forEach { list-> list.cards.forEach{card-> card.vendor = true} }
                 view.initPagerAdapter(lists)
 
             },{

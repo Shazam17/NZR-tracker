@@ -4,11 +4,14 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nzr.R
 import com.example.nzr.common.mvp.IView
 import com.example.nzr.data.rest.RetrofitFabric
+import com.example.nzr.data.rest.models.transition
 import com.example.nzr.data.rest.repository.TrelloRepository
+import com.example.nzr.data.rest.repository.YandexRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_card_detail.*
@@ -29,26 +32,45 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         id = intent.extras!!.getString("id")
         vendor = intent.extras!!.getBoolean("vendor")
         Log.d("detail",id!!)
+
         if(!vendor!!){
             presenter.fetchCardByIdYandex(id!!)
         }else{
             presenter.fetchCardByIdTrello(id!!)
         }
 
-        moveToClosed.setOnClickListener {
-            presenter.moveToClosed(id!!,"resolved")
+        var rbList = ArrayList<String>()
+
+        if(!vendor!!){
+            var res =YandexRepository()
+                .fetchTransitionsById(id!!)
+                .subscribe({
+                    if(it.isSuccessful){
+                        it.body()!!.forEachIndexed {index ,transition ->
+                            var button = RadioButton(this)
+                            button.id = index
+                            button.text = transition.to.key
+                            rbList.add(transition.to.key)
+                            buttonGroup.addView(button)
+                        }
+                    }
+                },{
+
+                })
         }
 
+
+
         moveTo.setOnClickListener {
-            var idIn = buttonGroup.checkedRadioButtonId
-            var type:String = ""
-            when(idIn){
-                R.id.needInfo -> type = "needInfo"
-                R.id.inProgress -> type = "inProgress"
-                else -> "null"
+            if(vendor!!){
+
+            }else{
+                var idIn = buttonGroup.checkedRadioButtonId
+                presenter.moveToClosed(id!!,rbList.get(idIn))
             }
-            presenter.moveToClosed(id!!,type)
         }
+
+
     }
 
     override fun getActivity(): Activity {

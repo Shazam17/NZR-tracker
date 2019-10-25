@@ -10,23 +10,21 @@ class CreateCardPresenter(var view:CreateCardContract.AddCardView) :CreateCardCo
 
     override fun createCard(name:String,id: String, vendor: Boolean) {
         if(vendor){
-            //trello
-           // TrelloRepository()
+            TrelloRepository()
                 //.createCard(id)
         }else{
-            //yandex
-//            Log.d("create",id)
-//            subscriptions += YandexRepository()
-//                .createCard(name,id)
-//                .subscribe({
-//                        Log.d("create",it.message())
-//                        Log.d("create",it.raw()!!.toString())
-//                        view.back()
-//                    },{
-//                        Log.d("create",it.localizedMessage)
-//
-//
-//                })
+            Log.d("create",id)
+            subscriptions += YandexRepository()
+                .createCard(name,id)
+                .subscribe({
+                        Log.d("create",it.message())
+                        Log.d("create",it.raw()!!.toString())
+                        view.back()
+                    },{
+                        Log.d("create",it.localizedMessage)
+
+
+                })
                 }
     }
 }
