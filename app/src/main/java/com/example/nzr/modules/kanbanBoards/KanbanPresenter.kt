@@ -38,7 +38,7 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
                         lists[2].cards.addAll(lsInWork)
 
                         var lsClosed : MutableList<cardShort> = ArrayList()
-                        it.body()!!.forEach { task -> if(task.status.key.equals("closed")) lsClosed.add(cardShort(task.id,task.summary,false))}
+                        it.body()!!.forEach { task -> if(task.status.key.equals("resolved")) lsClosed.add(cardShort(task.id,task.summary,false))}
                         lists[3].cards.addAll(lsClosed)
                         view.initPagerAdapter(lists)
                     }

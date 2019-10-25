@@ -1,5 +1,7 @@
 package com.example.nzr.modules.CardDetailActivity
 
+import com.example.nzr.common.mvp.IView
+
 interface CardDetailContract {
 
     interface CardDetailPresenter{
@@ -8,9 +10,10 @@ interface CardDetailContract {
         fun moveToClosed(id:String,type:String)
     }
 
-    interface CardDetailView{
+    interface CardDetailView : IView{
         fun initViews(name : String , desc : String)
         fun getVendor():Boolean
+        fun back()
     }
 
     interface CardDetailModel{

@@ -53,9 +53,11 @@ interface YandexRequests{
     @GET("issues/{cardId}")
     fun getCardById(@Path("cardId") cardId:String) :Observable<Response<yandexCard>>
 
+    @GET("issues/{cardId}/transitions")
+    fun getTransitions(@Path("cardId")cardId:String) :Observable<Response<List<transition>>>
+
     @POST("issues/_search")
     fun getCards(@Body filter: Map<String,String>) : Observable<Response<List<yandexCard>>>
-
 
     @POST("issues/")
     fun createCard(@Body params:requestCreateCardYandexBody) :Observable<Response<yandexCard>>

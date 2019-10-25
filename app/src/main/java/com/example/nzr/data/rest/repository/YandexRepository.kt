@@ -46,6 +46,14 @@ class YandexRepository {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun fetchTransitionsById(id:String): Observable<Response<List<transition>>>{
+        return repository
+            .getTransitions(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
 //
 //    fun createCard(name:String ,id:String) : Observable<Response<yandexCard>>{
 //        //var map = requestCreateCardYandexBody(queueShort(id , name))

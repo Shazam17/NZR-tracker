@@ -2,15 +2,18 @@ package com.example.nzr.modules.CardDetailActivity
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.example.nzr.data.rest.models.transition
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import com.example.nzr.modules.startScreen.RXPresenter
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_card_detail.*
 
 class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDetailContract.CardDetailPresenter,RXPresenter(){
 
-
+    var yandex = YandexRepository()
 
     override fun fetchCardByIdTrello(id:String){
         subscriptions += TrelloRepository()
@@ -32,13 +35,27 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
 
         }else{
             //yandex
-            subscriptions += YandexRepository()
-                .moveCard(id,type)
-                .subscribe({
 
+            subscriptions += yandex
+                .fetchTransitionsById(id)
+                .concatMap {
+                    if(it.isSuccessful){
+                        var typeId : String = it.body()!!.find { transition -> transition.to.key == type }?.id?:"no"
+                        yandex.moveCard(id,typeId)
+                    }else{
+                        Observable.just(null)
+                    }
+                }.subscribe({
+                    if(it!!.isSuccessful){
+                        Log.d("fetchCardDetail","success")
+                        Toast.makeText(view.getActivity(),"success moving",Toast.LENGTH_SHORT).show()
+                        view.back()
+                    }
                 },{
-                    Log.d("detail",it.localizedMessage!!)
+                    Log.d("fetchCardDetail",it.localizedMessage!!)
+                    Toast.makeText(view.getActivity(),"Erorr in moving Card ${it.localizedMessage!!}",Toast.LENGTH_SHORT).show()
                 })
+
         }
     }
 
