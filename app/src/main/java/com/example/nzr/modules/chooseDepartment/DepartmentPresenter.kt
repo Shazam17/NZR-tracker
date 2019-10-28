@@ -8,7 +8,7 @@ import com.example.nzr.data.rest.repository.YandexRepository
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 
-class DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
+class  DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
     ChooseDepartmentContract.DepartmentPresenter, RXPresenter() {
 
     var trelloRepository = TrelloRepository()
@@ -38,8 +38,13 @@ class DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
                     }
                     Log.d("fetch", task.name)
                 }
-                Observable.just(boards)
-            }.subscribe()
+                view.updateAdapter(boards)
+                Observable.just(null)
+            }.subscribe({
+
+            },{
+
+            })
     }
 
 }

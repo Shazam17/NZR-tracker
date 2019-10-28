@@ -25,8 +25,8 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.nzr.R.layout.activty_kanban)
-        trelloId = intent.extras!!.getString("trello")
-        yandexId = intent.extras!!.getString("yandex")
+        trelloId = intent.extras?.getString("trello")?:"no"
+        yandexId = intent.extras?.getString("yandex")?:"no"
         name = intent.extras!!.getString("name")
         title = name
         Log.d("kanban","trello id = ${trelloId} yandexId = ${yandexId}")

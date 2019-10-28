@@ -25,14 +25,27 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
         trelloId = intent.extras?.getString("trelloListId")
         yandexId = intent.extras?.getString("yandexId")
 
+        if(yandexId != "no" ){
+            val yandexButton = RadioButton(this)
+            yandexButton.text = "yandex"
+            yandexButton.id = 0
+            vendors.addView(yandexButton)
+        }
+        if(trelloId != "no" ){
+            val trelloButton = RadioButton(this)
+            trelloButton.text = "trello"
+            trelloButton.id = 1
+            vendors.addView(trelloButton)
+        }
+
         buttonCreateCard.setOnClickListener {
             var vendorId = vendors.checkedRadioButtonId
             var vendor: Boolean?
 
-            if (vendorId == R.id.trelloVendor) {
+            if (vendorId == 1) {
                 vendor = true
                 presenter?.createCard(cardName.text.toString(), trelloId!!, vendor)
-            } else {
+            } else if(vendorId == 0){
                 vendor = false
                 presenter?.createCard(cardName.text.toString(), yandexId!!, vendor)
             }
