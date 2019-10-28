@@ -63,4 +63,12 @@ class TrelloRepository {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun createList(idBoard:String , name:String):Observable<Response<Board>>{
+        var map = mapOf("idBoard" to idBoard, "name" to name)
+        return trelloFabric
+            .createList(map)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

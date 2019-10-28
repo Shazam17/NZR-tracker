@@ -36,6 +36,10 @@ interface TrelloRequests{
     @PUT("cards/{cardId}")
     fun updateCard(@Path("cardId")cardId:String,@QueryMap params:Map<String,String>): Observable<Response<CardDetail>>
 
+
+    @POST("lists")
+    fun createList(@QueryMap params:Map<String,String>):Observable<Response<Board>>
+
     @DELETE("cards/")
     fun deleteCard(@Query("id") id:String)
 
