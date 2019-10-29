@@ -1,5 +1,6 @@
 package com.example.nzr.modules.chooseDepartment
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,15 +20,15 @@ class ChooseDepActivity : AppCompatActivity()  ,
         presenter = DepartmentPresenter(this)
         presenter.fetchDepartments()
 
-
-
-
-        //TODO вывести список отделов
-        //TODO навигация от отдела к доскам
+        initViews()
     }
 
-    override fun initAdapter(depList:MutableList<GenericBoardShort>) {
+    override fun initViews() {
 
+    }
+
+    override fun getActivity(): Activity {
+        return this
     }
     override fun updateAdapter(depList:MutableList<GenericBoardShort>){
         adapter = DepartmentAdapter(depList, this)

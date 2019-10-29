@@ -17,6 +17,24 @@ class StartActivity : AppCompatActivity() ,StartContract.StartView{
     lateinit var presenter : StartPresenter
     lateinit var codeWeb :String
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(com.example.nzr.R.layout.acitivity_start)
+        codeWeb  = getString(com.example.nzr.R.string.default_web_client_id)
+        presenter = StartPresenter(this)
+
+        initViews()
+    }
+
+    override fun initViews() {
+        signInButton.setOnClickListener {
+            presenter.signIn()
+        }
+        val fingerprints = VKUtils.getCertificateFingerprint(this, this.packageName)
+
+    }
+
     override fun getCode(): String? {
         return codeWeb
     }
@@ -30,6 +48,7 @@ class StartActivity : AppCompatActivity() ,StartContract.StartView{
         startActivity(intent)
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == presenter.RC_SIGN_IN) {
@@ -39,15 +58,4 @@ class StartActivity : AppCompatActivity() ,StartContract.StartView{
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(com.example.nzr.R.layout.acitivity_start)
-        codeWeb  = getString(com.example.nzr.R.string.default_web_client_id)
-        presenter = StartPresenter(this)
-        signInButton.setOnClickListener {
-            presenter.signIn()
-        }
-        val fingerprints = VKUtils.getCertificateFingerprint(this, this.packageName)
-
-    }
 }

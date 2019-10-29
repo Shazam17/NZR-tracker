@@ -7,8 +7,6 @@ import com.example.nzr.data.rest.models.ListsCards
 interface KanbanContract{
 
     interface KanbanPresenter{
-        fun fetchListsRepTrello()
-        fun fetchListsRepYandex()
         fun fetch()
         fun updateList()
         fun getTrelloListId(position:Int):String

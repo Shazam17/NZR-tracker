@@ -12,8 +12,8 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
 
     var presenter: CreateCardPresenter? = CreateCardPresenter(this)
-    var trelloId: String? = null
-    var yandexId: String? = null
+    var trelloId: String = "no"
+    var yandexId: String = "no"
 
     override fun getActivity(): Activity {
         return this
@@ -22,9 +22,12 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_card)
-        trelloId = intent.extras?.getString("trelloListId")
-        yandexId = intent.extras?.getString("yandexId")
+        trelloId = intent.extras?.getString("trelloListId")?:"no"
+        yandexId = intent.extras?.getString("yandexId")?:"no"
+        initViews()
+    }
 
+    override fun initViews() {
         if(yandexId != "no" ){
             val yandexButton = RadioButton(this)
             yandexButton.text = "yandex"
@@ -44,21 +47,16 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
             if (vendorId == 1) {
                 vendor = true
-                presenter?.createCard(cardName.text.toString(), trelloId!!, vendor)
+                presenter?.createCard(cardName.text.toString(), trelloId, vendor)
             } else if(vendorId == 0){
                 vendor = false
-                presenter?.createCard(cardName.text.toString(), yandexId!!, vendor)
+                presenter?.createCard(cardName.text.toString(), yandexId, vendor)
             }
 
         }
-
     }
-
     override fun back() {
         finish()
     }
 
-    override fun getCardId(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

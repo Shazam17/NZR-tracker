@@ -17,9 +17,9 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
 
     private var presenter =  KanbanPresenter(this)
 
-    private var trelloId : String? = null
-    private var yandexId : String? = null
-    private var name : String? = null
+    private var trelloId : String = "no"
+    private var yandexId : String? = "no"
+    private var name : String = "name"
     lateinit var adapter : KanbanPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +27,14 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         setContentView(com.example.nzr.R.layout.activty_kanban)
         trelloId = intent.extras?.getString("trello")?:"no"
         yandexId = intent.extras?.getString("yandex")?:"no"
-        name = intent.extras!!.getString("name")
-        title = name
+        name = intent.extras?.getString("name")?:"name"
+        title = "Доска ${name}"
         Log.d("kanban","trello id = ${trelloId} yandexId = ${yandexId}")
-        if(trelloId != null && yandexId != null){
-            presenter.fetch()
-        }else{
-            if(trelloId != null){
-                presenter.fetchListsRepTrello()
-            }
-            if(yandexId != null){
-                presenter.fetchListsRepYandex()
-            }
-        }
+
+        initViews()
+    }
+
+    override fun initViews() {
         swipeToRefreshKanban.setOnRefreshListener {
             presenter.updateList()
         }
@@ -92,8 +87,6 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
                 return true
             }
             else ->
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item)
         }
     }

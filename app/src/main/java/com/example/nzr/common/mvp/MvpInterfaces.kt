@@ -10,6 +10,7 @@ abstract class RXPresenter{
 }
 interface IView{
     fun getActivity(): Activity
+    fun initViews()
 }
 
 

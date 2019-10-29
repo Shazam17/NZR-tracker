@@ -22,6 +22,19 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
     }
 
     override fun fetch() {
+        if(view.getTrelloBoardId() != null && view.getYandexBoardId() != null){
+            fetchAll()
+        }else{
+            if(view.getTrelloBoardId() != null){
+                fetchListsRepTrello()
+            }
+            if(view.getYandexBoardId() != null){
+                fetchListsRepYandex()
+            }
+        }
+    }
+
+    private fun fetchAll() {
         if(view.getTrelloBoardId() != null && view.getYandexBoardId() != null ){
             subscriptions += TrelloRepository()
                 .fetchCardsById(view.getTrelloBoardId()!!)
@@ -62,20 +75,20 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
 
     override fun updateList() {
         lists.clear()
-        if(view.getTrelloBoardId() != null && view.getYandexBoardId() != null){
+        if(view.getTrelloBoardId() != "no" && view.getYandexBoardId() != "no"){
             fetch()
         }else{
-            if(view.getTrelloBoardId() != null){
+            if(view.getTrelloBoardId() != "no"){
                 fetchListsRepTrello()
             }
-            if(view.getYandexBoardId() != null){
+            if(view.getYandexBoardId() != "no"){
                 fetchListsRepYandex()
             }
         }
 
     }
 
-    override fun fetchListsRepTrello(){
+    private fun fetchListsRepTrello(){
         subscriptions += TrelloRepository()
             .fetchCardsById(view.getTrelloBoardId()!!)
             .subscribe({
@@ -88,7 +101,7 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
             })
     }
 
-    override fun fetchListsRepYandex() {
+    private fun fetchListsRepYandex() {
         Log.d("fetchRep",view.getYandexBoardId()!!)
         subscriptions += YandexRepository()
             .fetchCards(mapOf("queue" to view.getYandexBoardId()!!))

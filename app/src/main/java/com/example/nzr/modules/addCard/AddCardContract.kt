@@ -10,7 +10,6 @@ interface CreateCardContract{
     }
 
     interface AddCardView : IView{
-        fun getCardId():String
         fun back()
     }
 
