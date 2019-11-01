@@ -17,33 +17,26 @@ class  DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
     var boards: MutableList<GenericBoardShort> = ArrayList()
 
     override fun fetchDepartments() {
-        subscriptions += yandexRepository.fetchAllQueues()
+        subscriptions += yandexRepository.fetchBoards()
             .concatMap {
-                it.body()?.forEach { task ->
-                    boards.add(yandexQueueToGeneric(task))
-                    Log.d("fetch", task.id)
-                }
+               boards.addAll(it)
                 view.updateAdapter(boards)
                 trelloRepository.fetchBoards()
             }
-            .concatMap {
-                it.body()?.forEach { task ->
-                    var found = boards.filter { inTask -> inTask.name == task.name }
+            .subscribe({
+                it.forEach { dep ->
+                    var found = boards.filter { inTask -> inTask.name == dep.name }
                     if (found.isNotEmpty()) {
-                        Log.d("fetch", found.toString())
                         var index = boards.indexOf(found.first())
-                        boards[index].trelloId = task.id
+                        boards[index].ids.put("trello",dep.ids.get("trello")!!)
                     } else {
-                        boards.add(trelloToGeneric(task))
+                        boards.add(dep)
                     }
-                    Log.d("fetch", task.name)
                 }
                 view.updateAdapter(boards)
                 Observable.just(null)
-            }.subscribe({
-
             },{
-
+                Log.d("DepartmentPresenter","error ${it.localizedMessage}")
             })
     }
 

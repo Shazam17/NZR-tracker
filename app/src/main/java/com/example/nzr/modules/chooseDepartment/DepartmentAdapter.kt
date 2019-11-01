@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nzr.R
 import com.example.nzr.data.rest.models.GenericBoardShort
 import com.example.nzr.modules.kanbanBoards.KanbanBoardActivity
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.card_kanban.view.*
 
 class DepartmentAdapter(var departs :MutableList<GenericBoardShort>, val context: Context) :RecyclerView.Adapter<DepartmentAdapter.DepartHolder>(){
@@ -18,14 +19,11 @@ class DepartmentAdapter(var departs :MutableList<GenericBoardShort>, val context
         val name = view.textCardKanban
         var card = view.card
         var vendors = view.vendorText
-        var trelloId :String? = null
-        var yandexId :String? = null
+        var boardShort: GenericBoardShort? = null
         init{
                 view.setOnClickListener{
                     var intent = Intent(context,KanbanBoardActivity::class.java)
-                    intent.putExtra("trello",trelloId)
-                    intent.putExtra("yandex",yandexId)
-                    intent.putExtra("name",name.text.toString())
+                    intent.putExtra("board", Gson().toJson(boardShort))
 
                     context.startActivity(intent)
                 }
@@ -44,19 +42,13 @@ class DepartmentAdapter(var departs :MutableList<GenericBoardShort>, val context
     }
 
     override fun onBindViewHolder(holder: DepartHolder, position: Int) {
-        holder.name.text = departs.get(position).name
-        holder.trelloId = departs.get(position).trelloId
-        holder.yandexId = departs.get(position).yandexId
-        if(holder.trelloId != null){
-            holder.vendors.text = "trello"
+        holder.name.text = departs[position].name
+        holder.boardShort = departs[position]
+        var vendorString = ""
+        departs[position].ids.forEach { vendor, id ->
+            vendorString += "$vendor /"
         }
-        if(holder.yandexId != null){
-            holder.vendors.text = "yandex"
-        }
-        if(holder.trelloId != null && holder.yandexId != null ){
-            holder.vendors.text = "yandex/trello"
-
-        }
+        holder.vendors.text = vendorString
 
     }
 }

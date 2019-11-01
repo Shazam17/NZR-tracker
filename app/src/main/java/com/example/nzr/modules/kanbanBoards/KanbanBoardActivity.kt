@@ -9,7 +9,10 @@ import android.view.Menu
 import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
+import com.example.nzr.data.rest.models.GenericBoardShort
+import com.example.nzr.data.rest.models.GenericCardShort
 import com.example.nzr.modules.addCard.AddCardActivity
+import com.google.gson.Gson
 
 
 class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
@@ -17,20 +20,16 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
 
     private var presenter =  KanbanPresenter(this)
 
-    private var trelloId : String = "no"
-    private var yandexId : String? = "no"
-    private var name : String = "name"
     lateinit var adapter : KanbanPagerAdapter
+    lateinit var boardShort: GenericBoardShort
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.nzr.R.layout.activty_kanban)
-        trelloId = intent.extras?.getString("trello")?:"no"
-        yandexId = intent.extras?.getString("yandex")?:"no"
-        name = intent.extras?.getString("name")?:"name"
-        title = "Доска ${name}"
-        Log.d("kanban","trello id = ${trelloId} yandexId = ${yandexId}")
+        boardShort = Gson().fromJson(intent.extras!!.getString("board"), GenericBoardShort::class.java)
 
+        title = "Доска ${boardShort.name}"
+        presenter.fetch(boardShort.ids)
         initViews()
     }
 
@@ -49,19 +48,12 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         presenter.updateList()
     }
 
-    override fun initPagerAdapter(lists: List<ListsCards>){
+    override fun initPagerAdapter(lists: ArrayList<ArrayList<GenericCardShort>>){
         adapter = KanbanPagerAdapter(lists, this)
         adapter.notifyDataSetChanged()
         pager.adapter = adapter
     }
 
-    override fun getTrelloBoardId():String? {
-        return trelloId
-    }
-
-    override fun getYandexBoardId():String? {
-        return yandexId
-    }
 
     override fun getActivity() : Activity{
         return this
@@ -78,8 +70,7 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
                 if(presenter.lists.isNotEmpty()){
                     //TODO добавить логику добавления списка
                     var intent = Intent(this,AddCardActivity::class.java)
-                    intent.putExtra("trelloListId",presenter.getTrelloListId(adapter.current))
-                    intent.putExtra("yandexId",yandexId)
+
                     startActivity(intent)
                 }else{
 

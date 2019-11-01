@@ -18,8 +18,8 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
             .fetchCardById(id)
             .subscribe(
                 {
-                    Log.d("fetchCardDetail",it.body().toString())
-                    view.initViews(it.body()?.name!!,it.body()?.desc!!)
+                    Log.d("fetchCardDetail",it.toString())
+                    view.initViews(it.name,"")
 
                 },{
                     Log.d("fetchCardDetail",it.localizedMessage!!)
@@ -74,7 +74,7 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView) : CardDet
         subscriptions += YandexRepository()
             .fetchCardById(id)
             .subscribe({
-                view.initViews(it.body()?.summary!!,"desc")
+                view.initViews(it.name,"desc")
                 },{
                     Log.d("fetchCardDetail",it.localizedMessage!!)
                 })

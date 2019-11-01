@@ -26,14 +26,10 @@ class CreateCardPresenter(var view:CreateCardContract.AddCardView) :CreateCardCo
             subscriptions += YandexRepository()
                 .createCard(name,id)
                 .subscribe({
-                        Log.d("create",it.message())
-                        Log.d("create",it.raw()!!.toString())
                         view.back()
                     },{
                         Log.d("create",it.localizedMessage)
-
-
                 })
-                }
+        }
     }
 }

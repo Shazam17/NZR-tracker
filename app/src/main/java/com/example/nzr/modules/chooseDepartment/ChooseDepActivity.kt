@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nzr.R
 import com.example.nzr.data.rest.models.GenericBoardShort
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_choose_dep.*
 
 class ChooseDepActivity : AppCompatActivity()  ,
@@ -17,6 +18,7 @@ class ChooseDepActivity : AppCompatActivity()  ,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_dep)
+
         presenter = DepartmentPresenter(this)
         presenter.fetchDepartments()
 

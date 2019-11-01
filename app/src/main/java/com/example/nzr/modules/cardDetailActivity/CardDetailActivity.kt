@@ -11,7 +11,7 @@ import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import kotlinx.android.synthetic.main.activity_card_detail.*
 
-class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView,IView{
+class CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView,IView{
 
     var id : String? = ""
     var vendor : Boolean? = null
@@ -28,66 +28,66 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         vendor = intent.extras!!.getBoolean("vendor")
         Log.d("detail",id!!)
 
-        if(!vendor!!){
-            presenter.fetchCardByIdYandex(id!!)
-        }else{
-            presenter.fetchCardByIdTrello(id!!)
-        }
+//        if(!vendor!!){
+//            presenter.fetchCardByIdYandex(id!!)
+//        }else{
+//            presenter.fetchCardByIdTrello(id!!)
+//        }
 
         var rbList = ArrayList<String>()
 
-        if(!vendor!!){
-            var res =YandexRepository()
-                .fetchTransitionsById(id!!)
-                .subscribe({
-                    if(it.isSuccessful){
-                        it.body()!!.forEachIndexed {index ,transition ->
-                            var button = RadioButton(this)
-                            button.id = index
-                            button.text = transition.to.key
-                            rbList.add(transition.to.key)
-                            buttonGroup.addView(button)
-                        }
-                    }
-                },{
-
-                })
-        }else{
-            var trello = TrelloRepository()
-            var res = trello
-                .fetchBoardIdOfCard(id!!)
-                .concatMap {
-                    var boardId = it.body()!!.id
-                    trello.fetchCardsById(boardId)
-                }.subscribe({
-                    it.body()!!.forEachIndexed {index ,list ->
-                        var button = RadioButton(this)
-                        button.id = index
-                        button.text = list.name
-                        rbList.add(list.id)
-                        buttonGroup.addView(button)
-                    }
-                },{
-
-                })
-        }
-
-
-
-        moveTo.setOnClickListener {
-            if(vendor!!){
-                var idIn = buttonGroup.checkedRadioButtonId
-                presenter.moveToClosed(id!!,rbList.get(idIn))
-            }else{
-                var idIn = buttonGroup.checkedRadioButtonId
-                presenter.moveToClosed(id!!,rbList.get(idIn))
-            }
-        }
-
-
-        moveToTable.setOnClickListener {
-            presenter.move()
-        }
+//        if(!vendor!!){
+//            var res =YandexRepository()
+//                .fetchTransitionsById(id!!)
+//                .subscribe({
+//                    if(it.isSuccessful){
+//                        it.body()!!.forEachIndexed {index ,transition ->
+//                            var button = RadioButton(this)
+//                            button.id = index
+//                            button.text = transition.to.key
+//                            rbList.add(transition.to.key)
+//                            buttonGroup.addView(button)
+//                        }
+//                    }
+//                },{
+//
+//                })
+//        }else{
+//            var trello = TrelloRepository()
+//            var res = trello
+//                .fetchBoardIdOfCard(id!!)
+//                .concatMap {
+//                    var boardId = it.body()!!.id
+//                    trello.fetchCardsById(boardId)
+//                }.subscribe({
+//                    it.body()!!.forEachIndexed {index ,list ->
+//                        var button = RadioButton(this)
+//                        button.id = index
+//                        button.text = list.name
+//                        rbList.add(list.id)
+//                        buttonGroup.addView(button)
+//                    }
+//                },{
+//
+//                })
+//        }
+//
+//
+//
+//        moveTo.setOnClickListener {
+//            if(vendor!!){
+//                var idIn = buttonGroup.checkedRadioButtonId
+//                presenter.moveToClosed(id!!,rbList.get(idIn))
+//            }else{
+//                var idIn = buttonGroup.checkedRadioButtonId
+//                presenter.moveToClosed(id!!,rbList.get(idIn))
+//            }
+//        }
+//
+//
+//        moveToTable.setOnClickListener {
+//            presenter.move()
+//        }
 
     }
 
@@ -99,6 +99,9 @@ class   CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailVi
         finish()
     }
 
+    override fun initViews() {
+
+    }
     override fun initViews(name : String, desc : String){
         nameDetail.text = name
         descDetail.text = desc

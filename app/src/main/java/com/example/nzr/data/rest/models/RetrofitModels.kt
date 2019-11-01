@@ -68,7 +68,7 @@ data class YandexCard(
     var lastCommentUpdatedAt : String,
     var summary : String,
     var queue: YandexQueue,
-    var Status :Status
+    var status :Status
 
 )
 data class Status(
@@ -104,22 +104,41 @@ data class Transition(
 )
 
 data class GenericBoardShort(
-    var trelloId : String?,
-    var yandexId : String?,
+    var ids : MutableMap<String,String>,
+    var name : String
+)
+data class GenericCardDetail(
+    var id : Pair<String,String>,
+    var name : String
+)
+data class GenericCardShort(
+    var id : Pair<String,String>,
     var name : String
 )
 
+fun cardToGenericShort(card:CardShort,vendor:String):GenericCardShort{
+    return GenericCardShort(Pair(vendor,card.id),card.name)
+}
+fun cardToGenericDetail(card:CardDetail,vendor:String) : GenericCardDetail{
+    return GenericCardDetail(Pair(vendor,card.id),card.name)
+}
+fun cardToGenericDetail(card:YandexCard,vendor:String) : GenericCardDetail{
+    return GenericCardDetail(Pair(vendor,card.id),card.summary)
+}
 
 fun yandexToGeneric(board:YandexBoard) : GenericBoardShort{
-    return GenericBoardShort(null,board.id , board.name)
+    var ids = mutableMapOf("yandex" to board.id)
+    return GenericBoardShort(ids, board.name)
 }
 
 fun yandexQueueToGeneric(queue:QueueShort):GenericBoardShort{
-    return GenericBoardShort(null,queue.id,queue.name)
+    var ids = mutableMapOf("yandex" to queue.id)
+    return GenericBoardShort(ids,queue.name)
 }
 
 fun trelloToGeneric(board:Board) : GenericBoardShort{
-    return GenericBoardShort(board.id ,null, board.name)
+    var ids = mutableMapOf("trello" to board.id)
+    return GenericBoardShort(ids, board.name)
 }
 
 
