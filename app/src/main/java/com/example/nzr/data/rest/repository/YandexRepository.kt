@@ -97,13 +97,20 @@ class YandexRepository :IRepository{
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun fetchTransitionsById(id:String): Observable<Response<List<Transition>>>{
+
+    override fun fetchTranistions(id: String): Observable<ArrayList<GenericTransition>> {
         return repository
             .getTransitions(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .concatMap{
+                var list = ArrayList<GenericTransition>()
+                it.body()!!.forEach { transition ->
+                    list.add(GenericTransition(transition.to.key,transition.to.key))
+                }
+                Observable.just(list)
+            }
     }
-
 
 
 

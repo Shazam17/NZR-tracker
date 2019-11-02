@@ -55,6 +55,32 @@ class TrelloRepository :IRepository {
             }
     }
 
+    override fun fetchTranistions(id:String): Observable<ArrayList<GenericTransition>> {
+        var map = mapOf("cards" to "all",
+            "card_fields" to "name",
+            "filter" to "open",
+            "fields" to "name")
+        return trelloFabric
+            .getBoardIdOfCard(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .concatMap {
+                trelloFabric
+                    .getListsOfBoard(it.body()!!.id,map)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+            }
+            .concatMap {
+                var list = ArrayList<GenericTransition>()
+
+                it.body()!!.forEach {listCard ->
+                    list.add(GenericTransition(listCard.id,listCard.name))
+                }
+
+                Observable.just(list)
+            }
+    }
+
     override fun fetchBoards():Observable<ArrayList<GenericBoardShort>>{
         var map = mapOf("fields" to "all")
 

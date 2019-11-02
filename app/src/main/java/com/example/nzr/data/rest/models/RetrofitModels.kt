@@ -107,13 +107,20 @@ data class GenericBoardShort(
     var ids : MutableMap<String,String>,
     var name : String
 )
+
 data class GenericCardDetail(
     var id : Pair<String,String>,
     var name : String
 )
+
 data class GenericCardShort(
     var id : Pair<String,String>,
     var name : String
+)
+
+data class GenericTransition(
+    var id:String?,
+    var text:String?
 )
 
 fun cardToGenericShort(card:CardShort,vendor:String):GenericCardShort{

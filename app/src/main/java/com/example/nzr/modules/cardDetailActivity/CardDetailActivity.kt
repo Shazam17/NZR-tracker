@@ -2,93 +2,43 @@ package com.example.nzr.modules.cardDetailActivity
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nzr.R
 import com.example.nzr.common.mvp.IView
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_card_detail.*
+import com.example.nzr.data.rest.models.GenericCardShort
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
-import kotlinx.android.synthetic.main.activity_card_detail.*
+
 
 class CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView,IView{
 
-    var id : String? = ""
-    var vendor : Boolean? = null
-    var presenter = CardDetailPresenter(this)
-
-    override fun getVendor(): Boolean {
-        return vendor!!
-    }
+    var card :GenericCardShort? = null
+    lateinit var presenter : CardDetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_card_detail)
-        id = intent.extras!!.getString("id")
-        vendor = intent.extras!!.getBoolean("vendor")
-        Log.d("detail",id!!)
+        setContentView(com.example.nzr.R.layout.activity_card_detail)
 
-//        if(!vendor!!){
-//            presenter.fetchCardByIdYandex(id!!)
-//        }else{
-//            presenter.fetchCardByIdTrello(id!!)
-//        }
+        card = Gson().fromJson(intent.extras!!.getString("card"),GenericCardShort::class.java)
+        var pair :Pair<String,String>? = card?.id
+        presenter = CardDetailPresenter(this,pair!!)
+        presenter.fetch()
 
-        var rbList = ArrayList<String>()
+        moveTo.setOnClickListener {
+            var idIn = buttonGroup.checkedRadioButtonId
+            presenter.moveToClosed(idIn)
+        }
 
-//        if(!vendor!!){
-//            var res =YandexRepository()
-//                .fetchTransitionsById(id!!)
-//                .subscribe({
-//                    if(it.isSuccessful){
-//                        it.body()!!.forEachIndexed {index ,transition ->
-//                            var button = RadioButton(this)
-//                            button.id = index
-//                            button.text = transition.to.key
-//                            rbList.add(transition.to.key)
-//                            buttonGroup.addView(button)
-//                        }
-//                    }
-//                },{
-//
-//                })
-//        }else{
-//            var trello = TrelloRepository()
-//            var res = trello
-//                .fetchBoardIdOfCard(id!!)
-//                .concatMap {
-//                    var boardId = it.body()!!.id
-//                    trello.fetchCardsById(boardId)
-//                }.subscribe({
-//                    it.body()!!.forEachIndexed {index ,list ->
-//                        var button = RadioButton(this)
-//                        button.id = index
-//                        button.text = list.name
-//                        rbList.add(list.id)
-//                        buttonGroup.addView(button)
-//                    }
-//                },{
-//
-//                })
-//        }
-//
-//
-//
-//        moveTo.setOnClickListener {
-//            if(vendor!!){
-//                var idIn = buttonGroup.checkedRadioButtonId
-//                presenter.moveToClosed(id!!,rbList.get(idIn))
-//            }else{
-//                var idIn = buttonGroup.checkedRadioButtonId
-//                presenter.moveToClosed(id!!,rbList.get(idIn))
-//            }
-//        }
-//
-//
-//        moveToTable.setOnClickListener {
-//            presenter.move()
-//        }
+        moveToTable.setOnClickListener {
+            presenter.move()
+        }
 
+    }
+
+    override fun addRadioButton(button: RadioButton) {
+        buttonGroup.addView(button)
     }
 
     override fun getActivity(): Activity {

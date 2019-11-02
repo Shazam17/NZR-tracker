@@ -68,12 +68,8 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
         when (item.getItemId()) {
             com.example.nzr.R.id.add  ->{
                 if(presenter.lists.isNotEmpty()){
-                    //TODO добавить логику добавления списка
                     var intent = Intent(this,AddCardActivity::class.java)
-
                     startActivity(intent)
-                }else{
-
                 }
                 return true
             }

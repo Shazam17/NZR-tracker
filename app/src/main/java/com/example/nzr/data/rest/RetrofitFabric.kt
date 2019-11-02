@@ -1,74 +1,11 @@
 package com.example.nzr.data.rest
 
-import com.example.nzr.data.rest.models.*
-import io.reactivex.Observable
-import retrofit2.Response
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
-import okhttp3.Interceptor
-import retrofit2.http.*
 import java.io.IOException
-
-
-interface TrelloRequests{
-
-
-    @GET("boards/{boardID}")
-    fun getBoard(@Path("boardID")boardId:String) :Observable<Response<Board>>
-
-    @GET("boards/{boardID}/lists")
-    fun getListsOfBoard(@Path("boardID")boardId:String,@QueryMap params: Map<String, String>) :Observable<Response<List<ListsCards>>>
-
-    @GET("cards/{cardId}")
-    fun getCardById(@Path("cardId")cardId:String, @Query("fields")fields:String) : Observable<Response<CardDetail>>
-
-    @GET("members/5992868b5f6b925617fc350c/boards")
-    fun getAllBoards(@QueryMap params:Map<String,String>):Observable<Response<List<Board>>>
-
-    @GET("cards/{cardId}/board")
-    fun getBoardIdOfCard(@Path("cardId")cardId:String) : Observable<Response<Board>>
-
-    @POST("cards/")
-    fun createCard(@QueryMap params:Map<String,String>): Observable<Response<CardDetail>>
-
-    @PUT("cards/{cardId}")
-    fun updateCard(@Path("cardId")cardId:String,@QueryMap params:Map<String,String>): Observable<Response<CardDetail>>
-
-
-    @POST("lists")
-    fun createList(@QueryMap params:Map<String,String>):Observable<Response<Board>>
-
-    @DELETE("cards/")
-    fun deleteCard(@Query("id") id:String)
-
-
-}
-interface YandexRequests{
-
-    @GET("boards")
-    fun getAllBoards():Observable<Response<List<YandexBoard>>>
-
-    @GET("queues")
-    fun getAllQueues():Observable<Response<List<QueueShort>>>
-
-    @GET("issues/{cardId}")
-    fun getCardById(@Path("cardId") cardId:String) :Observable<Response<YandexCard>>
-
-    @GET("issues/{cardId}/transitions")
-    fun getTransitions(@Path("cardId")cardId:String) :Observable<Response<List<Transition>>>
-
-    @POST("issues/_search")
-    fun getCards(@Body filter: Map<String,String>) : Observable<Response<List<YandexCard>>>
-
-    @POST("issues/")
-    fun createCard(@Body params:RequestCreateCardYandexBody) :Observable<Response<YandexCard>>
-
-    @POST("/v2/issues/{issueId}/transitions/{transitionId}/_execute")
-    fun moveCard(@Path("issueId") issueId:String , @Path("transitionId") transitionId:String) :Observable<Response<List<Transition>>>
-
-}
 
 class RetrofitFabric{
     fun getTrelloInterceptor(): OkHttpClient.Builder{
@@ -94,7 +31,7 @@ class RetrofitFabric{
         })
         return httpClient
     }
-    fun getYandexInterceptor() :OkHttpClient.Builder{
+    fun getYandexInterceptor() : OkHttpClient.Builder{
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(object : Interceptor {
             @Throws(IOException::class)
@@ -118,7 +55,7 @@ class RetrofitFabric{
         })
         return httpClient
     }
-    fun getRetrofit(builder : OkHttpClient.Builder,adress:String) :Retrofit{
+    fun getRetrofit(builder : OkHttpClient.Builder, adress:String) : Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(adress)
