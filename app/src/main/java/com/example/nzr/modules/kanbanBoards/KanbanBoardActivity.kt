@@ -35,7 +35,7 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
 
     override fun initViews() {
         swipeToRefreshKanban.setOnRefreshListener {
-            presenter.updateList()
+            presenter.fetch(boardShort.ids)
         }
     }
 
@@ -45,7 +45,7 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
     override fun onResume() {
         super.onResume()
         Log.d("kanban","resuming")
-        presenter.updateList()
+        presenter.fetch(boardShort.ids)
     }
 
     override fun initPagerAdapter(lists: ArrayList<ArrayList<GenericCardShort>>){

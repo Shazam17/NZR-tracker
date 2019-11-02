@@ -98,14 +98,15 @@ class TrelloRepository :IRepository {
             }
     }
 
-
-
-    fun updateCard(idCard:String ,idList:String):Observable<Response<CardDetail>>{
+    override fun move(idCard:String ,idList:String): Observable<GenericCardDetail> {
         var map = mapOf("idList" to idList)
         return trelloFabric
             .updateCard(idCard , map)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .concatMap {
+                Observable.just(cardToGenericDetail(it.body()!!,"trello"))
+            }
     }
 
     fun fetchBoardIdOfCard(id:String) : Observable<Response<Board>>{

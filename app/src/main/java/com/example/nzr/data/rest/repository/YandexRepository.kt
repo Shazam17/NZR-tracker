@@ -1,5 +1,6 @@
 package com.example.nzr.data.rest.repository
 
+import android.util.Log
 import com.example.nzr.data.rest.RetrofitFabric
 import com.example.nzr.data.rest.models.*
 import io.reactivex.Observable
@@ -88,13 +89,14 @@ class YandexRepository :IRepository{
             }
     }
 
-
-
-    fun moveCard(id:String , type:String): Observable<Response<List<Transition>>>{
+    override fun move(idCard: String, idList: String): Observable<GenericCardDetail> {
         return repository
-            .moveCard(id,type)
+            .moveCard(idCard,idList)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .concatMap {
+                fetchCardById(idCard)
+            }
     }
 
 
@@ -106,7 +108,8 @@ class YandexRepository :IRepository{
             .concatMap{
                 var list = ArrayList<GenericTransition>()
                 it.body()!!.forEach { transition ->
-                    list.add(GenericTransition(transition.to.key,transition.to.key))
+                    Log.d("fetch",transition.toString())
+                    list.add(GenericTransition(transition.id,transition.to.key))
                 }
                 Observable.just(list)
             }

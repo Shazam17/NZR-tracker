@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_card_detail.*
 class CardDetailPresenter(var view: CardDetailContract.CardDetailView,var pair: Pair<String, String>) : CardDetailContract.CardDetailPresenter, RXPresenter(){
 
     lateinit var repository: IRepository
-    var rbList: ArrayList<String>()
+    var rbList =  ArrayList<String>()
 
     init{
         when(pair.first){
@@ -37,11 +37,11 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView,var pair: 
             .fetchTranistions(pair.second)
             .subscribe({
                 it.forEachIndexed{index,transition ->
-                    var button = RadioButton(this)
+                    var button = RadioButton(view.getActivity())
                     button.id = index
-                    button.text = transition.id
+                    button.text = transition.text
                     rbList.add(transition.id!!)
-                    view.addRadionButton(button)
+                    view.addRadioButton(button)
                 }
             },{
                 Log.d("fetchCardDetail",it.localizedMessage!!)
@@ -50,55 +50,23 @@ class CardDetailPresenter(var view: CardDetailContract.CardDetailView,var pair: 
 
         }
 
-    override fun moveToClosed(inString:String) {
-
-        repository.move()
-
-        if(view.getVendor()){
-            //trello
-            var trello = TrelloRepository()
-            subscriptions += trello
-                .updateCard(id,type)
-                .subscribe({
-                    Log.d("fetchCardDetail","success")
-                    Toast.makeText(view.getActivity(),"success moving",Toast.LENGTH_SHORT).show()
-                    view.back()
-                },{
-                    Log.d("fetchCardDetail",it.localizedMessage!!)
-                    Toast.makeText(view.getActivity(),"Erorr in moving Card ${it.localizedMessage!!}",Toast.LENGTH_SHORT).show()
-                })
-
-
-
-        }else{
-            //yandex
-            subscriptions += yandex
-                .fetchTransitionsById(id)
-                .concatMap {
-                    if(it.isSuccessful){
-                        var typeId : String = it.body()!!.find { transition -> transition.to.key == type }?.id?:"no"
-                        yandex.moveCard(id,typeId)
-                    }else{
-                        Observable.just(null)
-                    }
-                }.subscribe({
-                    if(it!!.isSuccessful){
-                        Log.d("fetchCardDetail","success")
-                        Toast.makeText(view.getActivity(),"success moving",Toast.LENGTH_SHORT).show()
-                        view.back()
-                    }
-                },{
-                    Log.d("fetchCardDetail",it.localizedMessage!!)
-                    Toast.makeText(view.getActivity(),"Erorr in moving Card ${it.localizedMessage!!}",Toast.LENGTH_SHORT).show()
-                })
-
-        }
-    }
-
-
-
-
-    override fun move() {
-
+    override fun move(index:Int) {
+        subscriptions += repository
+            .move(pair.second,rbList[index])
+            .subscribe({
+                Log.d("fetchCardDetail", "success")
+                Toast
+                    .makeText(view.getActivity(), "success moving", Toast.LENGTH_SHORT)
+                    .show()
+                view.back()
+            }, {
+                Log.d("fetchCardDetail", it.localizedMessage!!)
+                Toast
+                    .makeText(
+                    view.getActivity(),
+                    "Error in moving Card ${it.localizedMessage!!}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
     }
 }

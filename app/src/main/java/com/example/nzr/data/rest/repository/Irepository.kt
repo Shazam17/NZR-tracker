@@ -10,5 +10,5 @@ interface IRepository {
     fun fetchBoards(): Observable<ArrayList<GenericBoardShort>>
     fun fetchTranistions(id:String): Observable<ArrayList<GenericTransition>>
     fun createCard(name:String ,id:String): Observable<GenericCardDetail>
-
+    fun move(idCard:String ,idList:String): Observable<GenericCardDetail>
 }

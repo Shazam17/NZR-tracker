@@ -28,12 +28,10 @@ class CardDetailActivity: AppCompatActivity(), CardDetailContract.CardDetailView
 
         moveTo.setOnClickListener {
             var idIn = buttonGroup.checkedRadioButtonId
-            presenter.moveToClosed(idIn)
+            presenter.move(idIn)
         }
 
-        moveToTable.setOnClickListener {
-            presenter.move()
-        }
+
 
     }
 

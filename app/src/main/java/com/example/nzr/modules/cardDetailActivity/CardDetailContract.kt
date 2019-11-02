@@ -6,8 +6,7 @@ import com.example.nzr.common.mvp.IView
 interface CardDetailContract {
 
     interface CardDetailPresenter{
-        fun moveToClosed(inString:String)
-        fun move()
+        fun move(index:Int)
         fun fetch()
     }
 
