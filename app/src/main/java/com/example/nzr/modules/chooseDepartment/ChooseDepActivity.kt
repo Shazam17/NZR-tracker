@@ -32,6 +32,7 @@ class ChooseDepActivity : AppCompatActivity()  ,
     override fun getActivity(): Activity {
         return this
     }
+
     override fun updateAdapter(depList:MutableList<GenericBoardShort>){
         adapter = DepartmentAdapter(depList, this)
         list.adapter = adapter

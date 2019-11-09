@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NZR</string>
+    <string-array name="vendorsList">
+        <item>trello</item>
+        <item>yandex</item>
+    </string-array>
 </resources>
