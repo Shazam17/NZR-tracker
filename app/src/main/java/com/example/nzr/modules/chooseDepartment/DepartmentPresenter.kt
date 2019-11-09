@@ -1,16 +1,11 @@
 package com.example.nzr.modules.chooseDepartment
 
 import android.util.Log
-import com.example.nzr.R
 import com.example.nzr.common.mvp.RXPresenter
 import com.example.nzr.data.rest.DepartmentStrategyFabric
 import com.example.nzr.data.rest.IDepartmentStrategy
 import com.example.nzr.data.rest.models.*
-import com.example.nzr.data.rest.repository.TrelloRepository
-import com.example.nzr.data.rest.repository.YandexRepository
-import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.android.synthetic.main.activity_create_card.*
 
 class  DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
     ChooseDepartmentContract.DepartmentPresenter, RXPresenter() {
@@ -22,7 +17,7 @@ class  DepartmentPresenter(var view: ChooseDepartmentContract.DepartmentView) :
 
         var strategyFabric = DepartmentStrategyFabric()
 
-        departmentStategies = strategyFabric.getAllDepartments()
+        departmentStategies = strategyFabric.getAllStrategies()
 
         departmentStategies.forEach{ strategy ->
             subscriptions += strategy

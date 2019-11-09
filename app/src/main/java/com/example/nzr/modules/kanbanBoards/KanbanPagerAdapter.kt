@@ -44,7 +44,6 @@ class KanbanPagerAdapter(var lists: ArrayList<ArrayList<GenericCardShort>>, var 
     class PagerHolder(var view: View,var context: Context) : RecyclerView.ViewHolder(view){
 
         var list = view.list
-        var title = view.title
         lateinit var adapter : CardListAdapter
 
         fun setUp(cardList: ArrayList<GenericCardShort>, pos:Int){
@@ -52,14 +51,6 @@ class KanbanPagerAdapter(var lists: ArrayList<ArrayList<GenericCardShort>>, var 
                 CardListAdapter(cardList, context = context)
             list.adapter = adapter
             list.layoutManager = LinearLayoutManager(context)
-            when(pos){
-                0 -> title.text = "trello =  yandex = Открыто"
-                1 -> title.text = "trello =  yandex = Требуется информация"
-                2 -> title.text = "trello =  yandex = В работе"
-                3 -> title.text = "trello =  yandex = Закрыто"
-                else -> title.text = ""
-            }
-
         }
     }
 

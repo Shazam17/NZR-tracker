@@ -2,6 +2,8 @@ package com.example.nzr.modules.kanbanBoards
 
 import android.util.Log
 import com.example.nzr.common.mvp.RXPresenter
+import com.example.nzr.data.rest.IKanbanStrategy
+import com.example.nzr.data.rest.KanbanStrategyFabric
 import com.example.nzr.data.rest.models.CardShort
 import com.example.nzr.data.rest.models.GenericCardShort
 import com.example.nzr.data.rest.models.ListsCards
@@ -14,8 +16,18 @@ class KanbanPresenter(var view :KanbanContract.KanbanView) : KanbanContract.Kanb
 
     var lists : ArrayList<ArrayList<GenericCardShort>> = ArrayList()
 
+    var strategyList : ArrayList<IKanbanStrategy> = ArrayList()
+
     override fun fetch(ids:MutableMap<String,String>) {
+        var kanbanFabric = KanbanStrategyFabric()
         lists.clear()
+
+        strategyList = kanbanFabric.getAllStrategies(ids)
+
+        strategyList.forEach {
+
+        }
+
         ids.forEach{ vendor, id ->
             when(vendor){
                 "trello"-> {

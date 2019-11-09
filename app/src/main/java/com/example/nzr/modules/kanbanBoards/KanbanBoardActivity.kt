@@ -23,10 +23,13 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
     lateinit var adapter : KanbanPagerAdapter
     lateinit var boardShort: GenericBoardShort
 
+    val BOARD = "board"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.nzr.R.layout.activty_kanban)
-        boardShort = Gson().fromJson(intent.extras!!.getString("board"), GenericBoardShort::class.java)
+        boardShort = Gson().fromJson(intent.extras!!.getString(BOARD), GenericBoardShort::class.java)
 
         title = "Доска ${boardShort.name}"
         presenter.fetch(boardShort.ids)
@@ -42,9 +45,9 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
     override fun setRefresh(refresh:Boolean){
         swipeToRefreshKanban.setRefreshing(refresh)
     }
+
     override fun onResume() {
         super.onResume()
-        Log.d("kanban","resuming")
         presenter.fetch(boardShort.ids)
     }
 
