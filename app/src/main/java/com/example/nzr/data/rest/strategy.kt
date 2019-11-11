@@ -67,7 +67,6 @@ class KanbanYandexStrategy(override var id:String) : IKanbanStrategy{
     }
 }
 
-
 class KanbanTrelloStrategy(override var id:String) : IKanbanStrategy{
     var trelloRepository = TrelloRepository()
     override fun fetchCards(): Observable<ArrayList<ArrayList<GenericCardShort>>> {
@@ -75,22 +74,20 @@ class KanbanTrelloStrategy(override var id:String) : IKanbanStrategy{
     }
 }
 
-class KanbanStrategyFabric : IStrategyFabric<IKanbanStrategy>{
+class KanbanStrategyFabric(var map: Map<String,String>) : IStrategyFabric<IKanbanStrategy>{
 
     override fun getYandexStrategy() : IKanbanStrategy {
-        return KanbanYandexStrategy()
+            return KanbanYandexStrategy()
     }
 
     override fun getTrelloStrategy() : IKanbanStrategy {
         return KanbanTrelloStrategy()
     }
 
-    fun getAllStrategies(map : Map<String,String>) : ArrayList<IKanbanStrategy>{
+    fun getAllStrategies() : ArrayList<IKanbanStrategy>{
         var list = ArrayList<IKanbanStrategy>()
 
-        map.forEach { vendor, id ->
-
-        }
+        list.add()
 
         return list
     }
