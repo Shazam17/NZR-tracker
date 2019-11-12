@@ -16,9 +16,14 @@ interface IKanbanStrategy{
     fun fetchCards() : Observable<ArrayList<ArrayList<GenericCardShort>>>
 }
 
+interface IAddCardStrategy{
+    fun addCard() : Observable<GenericCardShort>
+}
+
 interface IStrategyFabric<Type>{
     fun getYandexStrategy():Type
     fun getTrelloStrategy():Type
+    fun getAllStrategies():ArrayList<Type>
 }
 
 class DepartmentYandexStrategy : IDepartmentStrategy{
@@ -49,7 +54,7 @@ class DepartmentStrategyFabric : IStrategyFabric<IDepartmentStrategy>{
         return DepartmentTrelloStrategy()
     }
 
-    fun getAllStrategies() : List<IDepartmentStrategy>{
+    override fun getAllStrategies() : ArrayList<IDepartmentStrategy>{
         var list = ArrayList<IDepartmentStrategy>()
 
         list.add(getYandexStrategy())
@@ -77,18 +82,58 @@ class KanbanTrelloStrategy(override var id:String) : IKanbanStrategy{
 class KanbanStrategyFabric(var map: Map<String,String>) : IStrategyFabric<IKanbanStrategy>{
 
     override fun getYandexStrategy() : IKanbanStrategy {
-            return KanbanYandexStrategy()
+        return KanbanYandexStrategy(map["yandex"]!!)
     }
 
     override fun getTrelloStrategy() : IKanbanStrategy {
-        return KanbanTrelloStrategy()
+        return KanbanTrelloStrategy(map["trello"]!!)
+    }
+    override fun getAllStrategies() : ArrayList<IKanbanStrategy>{
+        var list = ArrayList<IKanbanStrategy>()
+        map.forEach { vendor, id ->
+            when(vendor){
+                "trello" -> list.add(getTrelloStrategy())
+                "yandex" -> list.add(getYandexStrategy())
+            }
+        }
+        return list
+    }
+}
+
+class AddCardTrelloStrategy : IAddCardStrategy{
+    var trelloRepository = TrelloRepository()
+    override fun addCard(): Observable<GenericCardShort> {
+        return trelloRepository.createCard(id,name)
+    }
+}
+
+class AddCardYandexStrategy : IAddCardStrategy{
+    var yandexRepository = YandexRepository()
+    override fun addCard(): Observable<GenericCardShort> {
+       return yandexRepository.createCard(name,id)
+    }
+}
+
+class AddCardStrategyFabric() : IStrategyFabric<IAddCardStrategy>{
+
+    override fun getYandexStrategy(): IAddCardStrategy {
+        return AddCardYandexStrategy()
     }
 
-    fun getAllStrategies() : ArrayList<IKanbanStrategy>{
-        var list = ArrayList<IKanbanStrategy>()
+    override fun getTrelloStrategy(): IAddCardStrategy {
+        return AddCardTrelloStrategy()
+    }
 
-        list.add()
+    override fun getAllStrategies(): ArrayList<IAddCardStrategy> {
+        var list = ArrayList<IAddCardStrategy>()
+
+        list.add(getYandexStrategy())
+        list.add(getTrelloStrategy())
 
         return list
+    }
+
+    fun getStrategy(vendorId:Int): IAddCardStrategy{
+
     }
 }

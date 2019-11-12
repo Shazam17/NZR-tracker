@@ -12,8 +12,7 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
 
     var presenter: CreateCardPresenter? = CreateCardPresenter(this)
-    var trelloId: String = "no"
-    var yandexId: String = "no"
+    lateinit var map:Map<String,String>
 
     override fun getActivity(): Activity {
         return this
@@ -22,37 +21,24 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_card)
-        trelloId = intent.extras?.getString("trelloListId")?:"no"
-        yandexId = intent.extras?.getString("yandexId")?:"no"
+
         initViews()
     }
 
     override fun initViews() {
-        if(yandexId != "no" ){
-            val yandexButton = RadioButton(this)
-            yandexButton.text = "yandex"
-            yandexButton.id = 0
-            vendors.addView(yandexButton)
-        }
-        if(trelloId != "no" ){
-            val trelloButton = RadioButton(this)
-            trelloButton.text = "trello"
-            trelloButton.id = 1
-            vendors.addView(trelloButton)
+
+        var idIn:Int = 0
+        map.forEach { vendor, id ->
+            val button = RadioButton(this)
+            button.text = vendor
+            button.id = idIn
+            vendors.addView(button)
+            idIn++
         }
 
         buttonCreateCard.setOnClickListener {
             var vendorId = vendors.checkedRadioButtonId
-            var vendor: Boolean?
-
-            if (vendorId == 1) {
-                vendor = true
-                presenter?.createCard(cardName.text.toString(), trelloId, vendor)
-            } else if(vendorId == 0){
-                vendor = false
-                presenter?.createCard(cardName.text.toString(), yandexId, vendor)
-            }
-
+            presenter.createCard(vendorId)
         }
     }
     override fun back() {
