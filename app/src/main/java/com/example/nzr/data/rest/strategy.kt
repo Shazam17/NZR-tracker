@@ -1,6 +1,7 @@
 package com.example.nzr.data.rest
 
 import com.example.nzr.data.rest.models.GenericBoardShort
+import com.example.nzr.data.rest.models.GenericCardDetail
 import com.example.nzr.data.rest.models.GenericCardShort
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
@@ -17,7 +18,7 @@ interface IKanbanStrategy{
 }
 
 interface IAddCardStrategy{
-    fun addCard() : Observable<GenericCardShort>
+    fun addCard(id:String,name:String) : Observable<GenericCardDetail>
 }
 
 interface IStrategyFabric<Type>{
@@ -102,19 +103,19 @@ class KanbanStrategyFabric(var map: Map<String,String>) : IStrategyFabric<IKanba
 
 class AddCardTrelloStrategy : IAddCardStrategy{
     var trelloRepository = TrelloRepository()
-    override fun addCard(): Observable<GenericCardShort> {
+    override fun addCard(id:String,name:String): Observable<GenericCardDetail> {
         return trelloRepository.createCard(id,name)
     }
 }
 
 class AddCardYandexStrategy : IAddCardStrategy{
     var yandexRepository = YandexRepository()
-    override fun addCard(): Observable<GenericCardShort> {
+    override fun addCard(id:String,name:String): Observable<GenericCardDetail> {
        return yandexRepository.createCard(name,id)
     }
 }
 
-class AddCardStrategyFabric() : IStrategyFabric<IAddCardStrategy>{
+class AddCardStrategyFabric(var vendor:String) : IStrategyFabric<IAddCardStrategy>{
 
     override fun getYandexStrategy(): IAddCardStrategy {
         return AddCardYandexStrategy()
@@ -133,7 +134,11 @@ class AddCardStrategyFabric() : IStrategyFabric<IAddCardStrategy>{
         return list
     }
 
-    fun getStrategy(vendorId:Int): IAddCardStrategy{
-
+    fun getStrategy(): IAddCardStrategy?{
+        when (vendor){
+            "trello" -> return getTrelloStrategy()
+            "yandex" -> return getYandexStrategy()
+        }
+        return null
     }
 }

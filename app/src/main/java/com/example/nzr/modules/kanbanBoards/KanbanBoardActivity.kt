@@ -72,6 +72,7 @@ class KanbanBoardActivity :AppCompatActivity() ,KanbanContract.KanbanView{
             com.example.nzr.R.id.add  ->{
                 if(presenter.lists.isNotEmpty()){
                     var intent = Intent(this,AddCardActivity::class.java)
+                    intent.putExtra("board",Gson().toJson(boardShort))
                     startActivity(intent)
                 }
                 return true

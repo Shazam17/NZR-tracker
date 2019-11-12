@@ -6,12 +6,14 @@ import android.util.Log
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nzr.R
+import com.example.nzr.data.rest.models.GenericBoardShort
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_card.*
 
 class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
 
-    var presenter: CreateCardPresenter? = CreateCardPresenter(this)
+    var presenter: CreateCardPresenter? = CreateCardPresenter(this, arrayListOf("trello","yandex"))
     lateinit var map:Map<String,String>
 
     override fun getActivity(): Activity {
@@ -22,6 +24,8 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_card)
 
+        var boardShort = Gson().fromJson(intent.extras!!.getString("board"), GenericBoardShort::class.java)
+        map = boardShort.ids
         initViews()
     }
 
@@ -38,7 +42,7 @@ class AddCardActivity : AppCompatActivity(), CreateCardContract.AddCardView {
 
         buttonCreateCard.setOnClickListener {
             var vendorId = vendors.checkedRadioButtonId
-            presenter.createCard(vendorId)
+            presenter?.createCard(vendorId,map,cardName.text.toString())
         }
     }
     override fun back() {

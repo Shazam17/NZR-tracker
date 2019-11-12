@@ -6,7 +6,7 @@ interface CreateCardContract{
 
 
     interface AddCardPresenter{
-        fun createCard(vendorId:Int)
+        fun createCard(vendorId:Int,map:Map<String,String>,name:String)
     }
 
     interface AddCardView : IView{
