@@ -2,8 +2,6 @@ package com.example.nzr.modules.chooseDepartment
 
 import android.util.Log
 import com.example.nzr.common.mvp.RXPresenter
-import com.example.nzr.data.rest.DepartmentStrategyFabric
-import com.example.nzr.data.rest.IDepartmentStrategy
 import com.example.nzr.data.rest.models.*
 import io.reactivex.rxkotlin.plusAssign
 
