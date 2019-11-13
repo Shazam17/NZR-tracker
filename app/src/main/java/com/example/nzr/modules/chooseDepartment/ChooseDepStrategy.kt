@@ -2,6 +2,7 @@ package com.example.nzr.modules.chooseDepartment
 
 import com.example.nzr.data.rest.IStrategyFabric
 import com.example.nzr.data.rest.models.GenericBoardShort
+import com.example.nzr.data.rest.repository.IRepository
 import com.example.nzr.data.rest.repository.TrelloRepository
 import com.example.nzr.data.rest.repository.YandexRepository
 import io.reactivex.Observable
@@ -9,20 +10,10 @@ import io.reactivex.Observable
 interface IDepartmentStrategy{
     fun fetchBoards() : Observable<ArrayList<GenericBoardShort>>
 }
-class DepartmentYandexStrategy : IDepartmentStrategy{
 
-    var yandexRepository = YandexRepository()
-    override fun fetchBoards() : Observable<ArrayList<GenericBoardShort>> {
-        var list = ArrayList<GenericBoardShort>()
-        return yandexRepository.fetchBoards()
-    }
-}
-
-class DepartmentTrelloStrategy : IDepartmentStrategy{
-    var trelloRepository = TrelloRepository()
-    override fun fetchBoards() : Observable<ArrayList<GenericBoardShort>> {
-        var list = ArrayList<GenericBoardShort>()
-        return trelloRepository.fetchBoards()
+class GenericDepartmentStrategy<Type:IRepository>(var repository: Type) : IDepartmentStrategy{
+    override fun fetchBoards(): Observable<ArrayList<GenericBoardShort>> {
+        return repository.fetchBoards()
     }
 }
 
@@ -30,11 +21,11 @@ class DepartmentStrategyFabric : IStrategyFabric<IDepartmentStrategy> {
 
 
     override fun getYandexStrategy() : IDepartmentStrategy{
-        return DepartmentYandexStrategy()
+        return GenericDepartmentStrategy(YandexRepository())
     }
 
     override fun getTrelloStrategy() : IDepartmentStrategy{
-        return DepartmentTrelloStrategy()
+        return GenericDepartmentStrategy(TrelloRepository())
     }
 
     fun getAllStrategies() : ArrayList<IDepartmentStrategy>{

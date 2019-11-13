@@ -2,7 +2,6 @@ package com.example.nzr.modules.kanbanBoards
 
 import android.util.Log
 import com.example.nzr.common.mvp.RXPresenter
-import com.example.nzr.data.rest.IKanbanStrategy
 import com.example.nzr.data.rest.models.GenericCardShort
 
 

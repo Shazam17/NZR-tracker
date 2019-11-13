@@ -109,7 +109,7 @@ class TrelloRepository :IRepository {
             }
     }
 
-    fun fetchBoardIdOfCard(id:String) : Observable<Response<Board>>{
+    fun fetchBoardIdOfCard(id:String) : Observable<Response<BoardTrello>>{
         return trelloFabric
             .getBoardIdOfCard(id)
             .subscribeOn(Schedulers.io())
@@ -118,7 +118,7 @@ class TrelloRepository :IRepository {
 
 
 
-    fun createList(idBoard:String , name:String):Observable<Response<Board>>{
+    fun createList(idBoard:String , name:String):Observable<Response<BoardTrello>>{
         var map = mapOf("idBoard" to idBoard, "name" to name)
         return trelloFabric
             .createList(map)

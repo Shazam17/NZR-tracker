@@ -1,9 +1,7 @@
 package com.example.nzr.modules.kanbanBoards
 
-import android.app.Activity
 import com.example.nzr.common.mvp.IView
 import com.example.nzr.data.rest.models.GenericCardShort
-import com.example.nzr.data.rest.models.ListsCards
 
 interface KanbanContract{
 

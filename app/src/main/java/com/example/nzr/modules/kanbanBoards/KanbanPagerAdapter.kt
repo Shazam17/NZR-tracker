@@ -10,7 +10,6 @@ import com.example.nzr.R
 import com.example.nzr.common.adapters.CardListAdapter
 import com.example.nzr.data.rest.models.GenericCardShort
 
-import com.example.nzr.data.rest.models.ListsCards
 import kotlinx.android.synthetic.main.kanban_pager_item.view.*
 
 

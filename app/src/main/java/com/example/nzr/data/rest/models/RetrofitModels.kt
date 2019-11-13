@@ -1,7 +1,7 @@
 package com.example.nzr.data.rest.models
 
 
-data class Board(
+data class BoardTrello(
      var id :String,
      var name :String,
      var desc :String,
@@ -13,14 +13,14 @@ data class Board(
      var shortUrl  :  Boolean
 )
 
-data class CardShort(
+data class CardShortTrello(
     var id:String,
     var name:String,
     var vendor:Boolean = true
 )
 
 
-data class CardDetail(
+data class CardDetailTrello(
     var id:String,
     var name:String,
     var address:String,
@@ -31,28 +31,29 @@ data class CardDetail(
 
 )
 
-data class ListsCards(
+data class ListsCardsTrello(
     var id : String,
     var name:String,
-    var cards : MutableList<CardShort>
+    var cards : MutableList<CardShortTrello>
 )
 
-data class YandexBoard(
+data class BoardDetailYandex(
     var self : String,
     var id : String,
     var version : String,
     var name : String,
-    var columns : List<YandexColumn>,
+    var columns : List<ColumnYandex>,
     //filter
     var useRanking : Boolean
 )
-data class YandexColumn(
+
+data class ColumnYandex(
     var self : String,
     var id : String,
     var display : String
 )
 
-data class YandexQueue(
+data class QueueYandex(
     var self : String,
     var id : String,
     var key : String,
@@ -60,47 +61,47 @@ data class YandexQueue(
 )
 
 
-data class YandexCard(
+data class CardDetailYandex(
     var self : String,
     var id : String,
     var key : String,
     var version : Int,
     var lastCommentUpdatedAt : String,
     var summary : String,
-    var queue: YandexQueue,
-    var status :Status
+    var queue: QueueYandex,
+    var status :StatusYandex
 
 )
-data class Status(
+data class StatusYandex(
     var self:String,
     var id:String,
     var key:String,
     var display: String
 )
 
-data class QueueCreate(
+data class QueueCreatitionYandex(
     var id: String
 )
 
-data class QueueShort(
+data class QueueShortYandex(
     var id: String,
     var name:String
 )
 data class RequestCreateCardYandexBody(
-    var queue: QueueCreate,
+    var queue: QueueCreatitionYandex,
     var summary: String
 )
 
-data class TransitionScreen(
+data class TransitionScreenYandex(
     var self:String,
     var id:String
 )
 
-data class Transition(
+data class TransitionYandex(
     var self:String,
     var id:String,
-    var to:Status,
-    var screen:TransitionScreen
+    var to:StatusYandex,
+    var screen:TransitionScreenYandex
 )
 
 data class GenericBoardShort(
@@ -123,29 +124,29 @@ data class GenericTransition(
     var text:String?
 )
 
-fun cardToGenericShort(card:CardShort,vendor:String):GenericCardShort{
+fun cardToGenericShort(card:CardShortTrello, vendor:String):GenericCardShort{
     return GenericCardShort(Pair(vendor,card.id),card.name)
 }
-fun cardToGenericDetail(card:CardDetail,vendor:String) : GenericCardDetail{
+fun cardToGenericDetail(card:CardDetailTrello, vendor:String) : GenericCardDetail{
     return GenericCardDetail(Pair(vendor,card.id),card.name)
 }
-fun cardToGenericDetail(card:YandexCard,vendor:String) : GenericCardDetail{
+fun cardToGenericDetail(card:CardDetailYandex, vendor:String) : GenericCardDetail{
     return GenericCardDetail(Pair(vendor,card.id),card.summary)
 }
 
-fun yandexToGeneric(board:YandexBoard) : GenericBoardShort{
+fun yandexToGeneric(board:BoardDetailYandex) : GenericBoardShort{
     var ids = mutableMapOf("yandex" to board.id)
     return GenericBoardShort(ids, board.name)
 }
 
-fun yandexQueueToGeneric(queue:QueueShort):GenericBoardShort{
+fun yandexQueueToGeneric(queue:QueueShortYandex):GenericBoardShort{
     var ids = mutableMapOf("yandex" to queue.id)
     return GenericBoardShort(ids,queue.name)
 }
 
-fun trelloToGeneric(board:Board) : GenericBoardShort{
-    var ids = mutableMapOf("trello" to board.id)
-    return GenericBoardShort(ids, board.name)
+fun trelloToGeneric(boardTrello:BoardTrello) : GenericBoardShort{
+    var ids = mutableMapOf("trello" to boardTrello.id)
+    return GenericBoardShort(ids, boardTrello.name)
 }
 
 

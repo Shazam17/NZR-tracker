@@ -6,7 +6,6 @@ import com.example.nzr.data.rest.models.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 
 class YandexRepository :IRepository{
 
@@ -23,7 +22,7 @@ class YandexRepository :IRepository{
     }
     override fun createCard(name:String ,id:String) : Observable<GenericCardDetail>{
 
-        var map = RequestCreateCardYandexBody(QueueCreate(id),name)
+        var map = RequestCreateCardYandexBody(QueueCreatitionYandex(id),name)
         return repository
             .createCard(map)
             .subscribeOn(Schedulers.io())

@@ -11,24 +11,24 @@ import retrofit2.http.Path
 interface YandexRequests{
 
     @GET("boards")
-    fun getAllBoards(): Observable<Response<List<YandexBoard>>>
+    fun getAllBoards(): Observable<Response<List<BoardDetailYandex>>>
 
     @GET("queues")
-    fun getAllQueues(): Observable<Response<List<QueueShort>>>
+    fun getAllQueues(): Observable<Response<List<QueueShortYandex>>>
 
     @GET("issues/{cardId}")
-    fun getCardById(@Path("cardId") cardId:String) : Observable<Response<YandexCard>>
+    fun getCardById(@Path("cardId") cardId:String) : Observable<Response<CardDetailYandex>>
 
     @GET("issues/{cardId}/transitions")
-    fun getTransitions(@Path("cardId")cardId:String) : Observable<Response<List<Transition>>>
+    fun getTransitions(@Path("cardId")cardId:String) : Observable<Response<List<TransitionYandex>>>
 
     @POST("issues/_search")
-    fun getCards(@Body filter: Map<String,String>) : Observable<Response<List<YandexCard>>>
+    fun getCards(@Body filter: Map<String,String>) : Observable<Response<List<CardDetailYandex>>>
 
     @POST("issues/")
-    fun createCard(@Body params: RequestCreateCardYandexBody) : Observable<Response<YandexCard>>
+    fun createCard(@Body params: RequestCreateCardYandexBody) : Observable<Response<CardDetailYandex>>
 
     @POST("/v2/issues/{issueId}/transitions/{transitionId}/_execute")
-    fun moveCard(@Path("issueId") issueId:String, @Path("transitionId") transitionId:String) : Observable<Response<List<Transition>>>
+    fun moveCard(@Path("issueId") issueId:String, @Path("transitionId") transitionId:String) : Observable<Response<List<TransitionYandex>>>
 
 }

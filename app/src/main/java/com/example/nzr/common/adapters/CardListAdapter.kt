@@ -2,14 +2,12 @@ package com.example.nzr.common.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nzr.R
-import com.example.nzr.data.rest.models.CardShort
 import com.example.nzr.data.rest.models.GenericCardShort
 import com.example.nzr.modules.cardDetailActivity.CardDetailActivity
 import com.google.gson.Gson

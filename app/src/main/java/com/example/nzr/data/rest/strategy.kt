@@ -8,10 +8,6 @@ import com.example.nzr.data.rest.repository.YandexRepository
 import io.reactivex.Observable
 import kotlin.collections.ArrayList
 
-interface IKanbanStrategy{
-    var id:String
-    fun fetchCards() : Observable<ArrayList<ArrayList<GenericCardShort>>>
-}
 
 interface IStrategyFabric<Type>{
     fun getYandexStrategy():Type

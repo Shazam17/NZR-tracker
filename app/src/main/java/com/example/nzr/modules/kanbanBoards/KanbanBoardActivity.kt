@@ -3,11 +3,9 @@ package com.example.nzr.modules.kanbanBoards
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nzr.data.rest.models.ListsCards
 import kotlinx.android.synthetic.main.activty_kanban.*
 import android.view.Menu
 import android.content.Intent
-import android.util.Log
 import android.view.MenuItem
 import com.example.nzr.data.rest.models.GenericBoardShort
 import com.example.nzr.data.rest.models.GenericCardShort
